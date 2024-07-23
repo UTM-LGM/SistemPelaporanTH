@@ -29,6 +29,7 @@ export class TambahTugasHarianComponent implements OnInit {
   today = new Date();
   timeOptions: string[] = [];
   masaMulaOptions: string[] = [];
+  dateExistStatusThId: number | null = null;
 
   constructor(
     private laporanTugas: TugasanHarianService,
@@ -46,12 +47,15 @@ export class TambahTugasHarianComponent implements OnInit {
     this.laporanTugas.getKakitanganByEmail(this.currentUser.empEmailLogin).subscribe(res => {
       this.currentUser = res;
       this.laporanTugas.checkIfDateExist(this.currentUser.empId).subscribe(dateExist => {
-        console.log(dateExist, "dataexist")
         console.log(Object.keys(dateExist).length > 0)
+        this.dateExistStatusThId = dateExist?.statusThId || null;
         if (dateExist && Object.keys(dateExist).length > 0) {
-          if (dateExist.StatusThId == 1) {
-            console.log("StatusThId: ", dateExist.StatusThId);
+          if (dateExist.statusThId == 1) {
             const dialogRef = this.dialog.open(ExistDataComponent, {
+              width: '445px',
+            });
+          } else if (dateExist.statusThId == 2) {
+            const dialogRef = this.dialog.open(ExistDataHantarComponent, {
               width: '445px',
             });
           }
@@ -104,6 +108,26 @@ export class TambahTugasHarianComponent implements OnInit {
   }
 
   simpan() {
+    if (this.dateExistStatusThId === 1) {
+      Swal.fire({
+        html: '<span style="font-size: 18px;">Tidak boleh disimpan kerana tugasan harian pada hari ini telah wujud</span>',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 2500,
+      });
+      this.router.navigate(['/senaraiDeraf']);
+      return;
+    }
+    else if (this.dateExistStatusThId === 2) {
+      Swal.fire({
+        html: '<span style="font-size: 18px;">Tidak boleh disimpan kerana tugasan harian pada hari ini telah dihantar</span>',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 2500,
+      });
+      return;
+    }
+
     let hasError = false;
 
     for (let tugas of this.tugasan) {
@@ -166,6 +190,16 @@ export class TambahTugasHarianComponent implements OnInit {
   }
 
   hantar() {
+    if (this.dateExistStatusThId === 1 || this.dateExistStatusThId === 2) {
+      Swal.fire({
+        html: '<span style="font-size: 18px;">Tidak boleh disimpan kerana tugasan harian pada hari ini telah wujud</span>',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 2500,
+      });
+      this.router.navigate(['/senaraiDeraf']);
+      return;
+    }
     let hasError = false;
 
     for (let tugas of this.tugasan) {
