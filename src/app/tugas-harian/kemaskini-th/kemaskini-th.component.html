@@ -1,0 +1,56 @@
+<div class="main-content">
+    <mat-card style="padding: 50px;">
+        <!-- <h5>Laporan Tugasan Harian pada : {{ dateDisplay }}</h5> -->
+
+        <button type="button" class="btn btn-warning" (click)="update()"
+            style="position: absolute;right: 225px;top: 60px; text-align: left;width: 160px;">
+            Simpan Deraf&nbsp;
+            <i class="material-icons" style="font-size: 20px;position: absolute; right: 6px; top: 8px">save</i>
+        </button>
+        <button type="button" class="btn btn-success"
+            style="position: absolute;right: 50px;top: 60px; text-align: left;width: 160px;">
+            Hantar Laporan&nbsp;
+            <i class="material-icons" style="font-size: 20px;position: absolute; right: 6px; top: 8px">send</i>
+        </button>
+        <br>
+        <table style="margin-top: 35px;">
+            <tr>
+                <th style="width: 5%;">Bil.</th>
+                <th style="width: 70%;">Aktiviti/Perkara</th>
+                <th style="width: 10%;">Mula</th>
+                <th style="width: 10%;">Tamat</th>
+                <th style="width: 5%;">Padam</th>
+            </tr>
+            <tr *ngFor="let item of tugasan; let i=index">
+                <td style="text-align: center;"><input class="transparentInput" name="bil">{{i + 1}}</td>
+                <td>
+                    <textarea class="transparentInput" name="tugas" ngModel [(ngModel)]="item.tugasanHarian"></textarea>
+                </td>
+                <td>
+                    <select class="custom-select" name="masaMula" [(ngModel)]="item.masaMula"
+                        (change)="onMasaMulaChange(i, item.masaMula)">
+                        <option *ngFor="let time of timeOptions" [value]="time">{{ time }}</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="custom-select" name="masaTamat" [(ngModel)]="item.masaTamat">
+                        <option *ngFor="let time of item.filteredMasaTamatOptions" [value]="time">{{ time }}</option>
+                    </select>
+                </td>
+                <td>
+                    <i class="material-icons"
+                        style="font-size: 18px;color: rgb(177, 15, 15);margin: 18px;font-weight: 900;cursor: pointer;"
+                        (click)="padam(i)">delete</i>
+                </td>
+            </tr>
+        </table>
+
+        <div class="butt-button">
+            <button type="button" class="btn btn-light dullButton" (click)="tambah()"
+                style="width: 150px; display: flex; align-items: center; justify-content: space-between;">
+                <span>Tambah Laporan</span>
+                <i class="material-icons" style="font-size: 20px; font-weight: 700;">add</i>
+            </button>
+        </div>
+    </mat-card>
+</div>
