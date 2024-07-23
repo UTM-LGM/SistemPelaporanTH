@@ -1,26 +1,27 @@
 <div class="main-content">
     <mat-card style="padding: 50px;">
         <mat-card class="grad">
-            <h5>Senarai Deraf / Pembetulan</h5>
+            <h5>Kelulusan Tugas Harian</h5>
         </mat-card>
-        <br>
         <table *ngIf="laporanMain.length > 0; else noData">
             <tr>
                 <th style="width: 10%;">BIL.</th>
                 <th>TARIKH</th>
                 <th>NAMA</th>
                 <th>STATUS</th>
+                <th>KELULUSAN</th>
             </tr>
             <tr *ngFor="let item of laporanMain; let i=index">
                 <td>{{i + 1}}</td>
-                <td><a routerLink="/kemaskiniTH/{{item.id}}">{{item.tarikh}}</a></td>
+                <td><a routerLink="/kelulusanTH/{{item.id}}">{{item.tarikh}}</a></td>
                 <td>{{item.empName}}</td>
-                <td>{{item.statusName}}</td>
+                <td>{{item.statusThName}}</td>
+                <td></td>
                 <!-- <td><a routerLink="/rekod" (click)="onSelectData(item)">{{item}}</a></td> -->
             </tr>
         </table>
         <ng-template #noData>
-            <div class="no-data-message">Tiada tugasan harian direkod.</div>
+            <div class="no-data-message">Tiada tugasan harian untuk diluluskan.</div>
         </ng-template>
     </mat-card>
 </div>

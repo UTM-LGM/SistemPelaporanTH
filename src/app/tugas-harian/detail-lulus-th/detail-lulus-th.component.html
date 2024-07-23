@@ -1,0 +1,39 @@
+<div class="main-content">
+    <mat-card style="padding: 50px;">
+        <div *ngFor="let item of laporanMain">
+            <h5>Laporan Tugasan Harian <b>{{item.empName}}</b></h5><br>
+            <h5>Tarikh: {{item.tarikh}}</h5>
+        </div>
+        <table>
+            <tr>
+                <th style="width: 5%;">Bil.</th>
+                <th style="width: 70%;">Aktiviti/Perkara</th>
+                <th style="width: 10%;">Mula</th>
+                <th style="width: 10%;">Tamat</th>
+            </tr>
+            <tr *ngFor="let item of tugasan; let i=index">
+                <td style="text-align: center;"><input class="transparentInput" name="bil">{{i + 1}}</td>
+                <td>
+                    <div class="displayText">{{item.tugasanHarian}}</div>
+                </td>
+                <td>
+                    <div class="displayText">{{item.masaMula}}</div>
+                </td>
+                <td>
+                    <div class="displayText">{{item.masaTamat}}</div>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <div class="button-container">
+            <button type="button" class="btn btn-danger">
+                Tolak&nbsp;
+                <i class="material-icons" style="font-size: 35px;position: absolute;">cancel</i>
+            </button>
+            <button type="button" class="btn btn-success">
+                Lulus&nbsp;
+                <i class="material-icons" style="font-size: 35px;position: absolute;">check_circle</i>
+            </button>
+        </div>
+    </mat-card>
+</div>

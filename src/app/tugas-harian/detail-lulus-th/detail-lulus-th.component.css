@@ -1,0 +1,201 @@
+.content {
+    position: relative;
+}
+
+mat-card {
+    position: absolute;
+    padding: 50px;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.stack-top {
+    z-index: 9;
+    margin: 0 auto;
+    width: 300px;
+    height: 200px;
+    box-shadow: 0px 6px 40px 8px rgba(71, 71, 71, 0.767);
+}
+
+table {
+    width: 100%;
+    border-spacing: 0;
+    margin-top: 35px;
+    border-radius: 1px;
+    overflow: hidden;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+th {
+    background-color: #e5e5e5;
+    color: rgb(61, 61, 61);
+    padding: 15px;
+    text-align: left;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+td {
+    padding: 10px;
+    background-color: #ffffff;
+    border-bottom: 0 solid #eee;
+}
+
+th {
+    padding: 10px;
+    background-color: #218838;
+    color: #ffffff;
+    border-bottom: 0 solid #eee;
+    font-weight: 400;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+td {
+    box-shadow: inset 0 0 0 rgba(0, 0, 0, 0.1);
+}
+
+.transparentInput {
+    border: none;
+    background: transparent;
+    width: 100%;
+    box-shadow: none;
+    padding: 5px;
+}
+
+textarea.transparentInput {
+    resize: none;
+    width: 100%;
+}
+
+.material-icons {
+    vertical-align: middle;
+}
+
+.butt-button .btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: left;
+    width: 150px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.butt-button .btn:hover {
+    background-color: #218838;
+}
+
+.butt-button .btn .material-icons {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.custom-select {
+    width: 90%;
+    margin: auto;
+}
+
+.custom-select select {
+    display: inline-block;
+
+    font-size: 16px;
+    border: 1px solid #a5aeb8;
+    background-color: #ebeaea;
+    border-radius: 5px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.custom-select select:focus {
+    outline: none;
+    border-color: #5b9dd9;
+    /* example focus color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.custom-select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+.displayText {
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2c3e50;
+    padding: 10px;
+    min-height: 25px; 
+    overflow: hidden; 
+    text-align: left;
+}
+.grad {
+    width: auto;
+    margin-bottom: 0;
+    padding: 8px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: green;
+    font-weight: 400;
+    text-align: center;
+    color: #fff;
+    height: 40px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between buttons */
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+}
+
+.btn {
+    width: 160px;
+    text-align: left;
+    position: relative;
+    padding-right: 35px; /* Adjust to provide space for the icon */
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+.material-icons {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+}
+

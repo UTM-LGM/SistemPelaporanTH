@@ -33,6 +33,12 @@ export class TugasanHarianService {
     return this.httpClient.post<tugasHarian_Main>(this.baseUrl + '/TugasHarianMains/PostTugasHarian', body, httpOptions)
   }
 
+  hantarTugasan(data: tugasHarian_Main): Observable<tugasHarian_Main> {
+    var body = JSON.stringify(data);
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    return this.httpClient.post<tugasHarian_Main>(this.baseUrl + '/TugasHarianMains/PostHantarTugasHarian', body, httpOptions)
+  }
+
   simpanDerafDetail(detailRequests: tugasHarian_Detail[]): Observable<tugasHarian_Detail[]> {
     var body = JSON.stringify(detailRequests);
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
@@ -51,14 +57,26 @@ export class TugasanHarianService {
 
   ////////////////////////////////// Kemaskini Tugasan Harian/////////////////////////////////////////////////
 
-  updateTugasHarian(object: any[]) {
-    var body = JSON.stringify(object);
-    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    return this.httpClient.put(this.baseUrl + '/TugasHarianDetails/UpdateTugasHarian', body, httpOptions);
-  }
-
   updateTugasan(tugasan: tugasHarian_Detail[]): Observable<any> {
     return this.httpClient.put(`${this.baseUrl}/TugasHarianDetails/UpdateTugasHarian`, tugasan);
+  }
+
+  updateDerafDetail(tugasan: tugasHarian_Detail[]): Observable<any> {
+    return this.httpClient.put(`${this.baseUrl}/TugasHarianDetails/UpdateHantarTugasHarian`, tugasan);
+  }
+
+  ////////////////////////////////// Kelulusan Tugasan Harian/////////////////////////////////////////////////
+
+  getSenaraiKelulusan(empId): Observable<tugasHarian_Main[]> {
+    return this.httpClient.get<tugasHarian_Main[]>(this.baseUrl + '/TugasHarianMains/GetSenaraiKelulusan/' + empId);
+  }
+
+  getTugasanDetailById(id): Observable<tugasHarian_Detail[]> {
+    return this.httpClient.get<tugasHarian_Detail[]>(this.baseUrl + '/TugasHarianDetails/GetTugasanDetailsById/' + id);
+  }
+
+  getMainById(id): Observable<tugasHarian_Main[]> {
+    return this.httpClient.get<tugasHarian_Main[]>(this.baseUrl + '/TugasHarianMains/GetMainById/' + id);
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

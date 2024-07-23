@@ -114,7 +114,6 @@ export class KemaskiniTHComponent implements OnInit {
         break;
       }
     }
-  
     if (hasError) {
       Swal.fire({
         html: '<span style="font-size: 18px;">Sila pastikan semua ruangan diisi dengan lengkap sebelum disimpan.</span>',
@@ -124,8 +123,6 @@ export class KemaskiniTHComponent implements OnInit {
       });
       return;
     }
-  
-    // Call the service method to update the tasks
     this.laporanTugas.updateTugasan(this.tugasan).subscribe(
       response => {
         Swal.fire({
@@ -133,12 +130,52 @@ export class KemaskiniTHComponent implements OnInit {
           icon: 'success',
           showConfirmButton: false,
           timer: 2500,
+          
         });
-        // Optionally, you can navigate to another page or reload data here
       },
       error => {
         Swal.fire({
           html: '<span style="font-size: 18px;">Ralat berlaku semasa mengemaskini laporan.</span>',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      }
+    );
+  }
+
+  updateSend(){
+    let hasError = false;
+  
+    for (let tugas of this.tugasan) {
+      if (!tugas.masaMula || !tugas.masaTamat || !tugas.tugasanHarian ||
+        tugas.masaMula.trim() === '' || tugas.masaTamat.trim() === '' || tugas.tugasanHarian.trim() === '') {
+        hasError = true;
+        break;
+      }
+    }
+    if (hasError) {
+      Swal.fire({
+        html: '<span style="font-size: 18px;">Sila pastikan semua ruangan diisi dengan lengkap sebelum disimpan.</span>',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 2500,
+      });
+      return;
+    }
+    this.laporanTugas.updateDerafDetail(this.tugasan).subscribe(
+      response => {
+        Swal.fire({
+          html: '<span style="font-size: 18px;">Laporan tugasan harian berjaya dihantar.</span>',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 2500,
+        });
+        this.router.navigate(['/senaraiDeraf']);
+      },
+      error => {
+        Swal.fire({
+          html: '<span style="font-size: 18px;">Ralat berlaku semasa menghantar laporan.</span>',
           icon: 'error',
           showConfirmButton: false,
           timer: 2500,

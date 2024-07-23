@@ -15,12 +15,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { RouterModule } from '@angular/router';
 import { KemaskiniTHComponent } from './kemaskini-th/kemaskini-th.component';
+import { SenaraiLaporanTHIndividuComponent } from './senarai-laporan-th-individu/senarai-laporan-th-individu.component';
+import { KelulusanTHComponent } from './kelulusan-th/kelulusan-th.component';
+import { DetailLulusThComponent } from './detail-lulus-th/detail-lulus-th.component';
 
 @NgModule({
   declarations: [
     TambahTugasHarianComponent,
     SenaraiDerafpembetulanComponent,
-    KemaskiniTHComponent
+    KemaskiniTHComponent,
+    SenaraiLaporanTHIndividuComponent,
+    KelulusanTHComponent,
+    DetailLulusThComponent
   ],
   imports: [
     CommonModule,
