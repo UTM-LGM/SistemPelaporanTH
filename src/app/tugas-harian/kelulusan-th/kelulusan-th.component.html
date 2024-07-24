@@ -3,6 +3,30 @@
         <mat-card class="grad">
             <h5>Kelulusan Tugas Harian</h5>
         </mat-card>
+        <br>
+        <div>
+            <mat-form-field>
+                <mat-label>Unit</mat-label>
+                <mat-select [(value)]="selectedUnitId">
+                    <mat-option *ngFor="let item of units" [value]="item.unit_id">{{item.instant}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field style="width: 510px;margin-left: 10px;">
+                <mat-label>Nama Penjawat</mat-label>
+                <mat-select [(value)]="selectedEmpId">
+                    <mat-option *ngFor="let item of employees" [value]="item.empId">{{item.empName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field style="margin-left: 10px;">
+                <mat-label>Tarikh</mat-label>
+                <input matInput [matDatepicker]="tarikhPicker" name="selectedDate" [(ngModel)]="selectedTarikh">
+                <mat-datepicker-toggle matSuffix [for]="tarikhPicker"></mat-datepicker-toggle>
+                <mat-datepicker #tarikhPicker></mat-datepicker>
+            </mat-form-field>
+            <button type="button" class="btn btn-success" style="margin-left: 27px;width: 130px;" (click)="cari()">
+                Cari
+            </button>
+        </div>
         <table *ngIf="laporanMain.length > 0; else noData">
             <tr>
                 <th style="width: 10%;">BIL.</th>
@@ -17,7 +41,6 @@
                 <td>{{item.empName}}</td>
                 <td>{{item.statusThName}}</td>
                 <td></td>
-                <!-- <td><a routerLink="/rekod" (click)="onSelectData(item)">{{item}}</a></td> -->
             </tr>
         </table>
         <ng-template #noData>

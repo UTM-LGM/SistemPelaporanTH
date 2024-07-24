@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { VerticalNavbarComponent } from './vertical-navbar/vertical-navbar.component';
 import { TugasanHarianModule } from './tugas-harian/tugasan-harian.module';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { DatePipe, registerLocaleData } from '@angular/common';
 import localeMs from '@angular/common/locales/ms';

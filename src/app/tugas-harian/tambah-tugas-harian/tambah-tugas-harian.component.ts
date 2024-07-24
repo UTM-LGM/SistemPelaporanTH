@@ -47,7 +47,6 @@ export class TambahTugasHarianComponent implements OnInit {
     this.laporanTugas.getKakitanganByEmail(this.currentUser.empEmailLogin).subscribe(res => {
       this.currentUser = res;
       this.laporanTugas.checkIfDateExist(this.currentUser.empId).subscribe(dateExist => {
-        console.log(Object.keys(dateExist).length > 0)
         this.dateExistStatusThId = dateExist?.statusThId || null;
         if (dateExist && Object.keys(dateExist).length > 0) {
           if (dateExist.statusThId == 1) {

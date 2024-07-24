@@ -23,7 +23,6 @@ export class SenaraiDerafpembetulanComponent implements OnInit {
       this.currentUser = res;
     this.laporanTugas.getSenaraiDeraf(this.currentUser.empId).subscribe(draf => {
       this.laporanMain = draf
-      console.log(draf)
     })
     });
   }

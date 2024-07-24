@@ -5,7 +5,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { TambahTugasHarianComponent } from './tambah-tugas-harian/tambah-tugas-harian.component';
 import { SenaraiDerafpembetulanComponent } from './senarai-derafpembetulan/senarai-derafpembetulan.component';
 import {MatCardModule} from '@angular/material/card';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -18,6 +18,8 @@ import { KemaskiniTHComponent } from './kemaskini-th/kemaskini-th.component';
 import { SenaraiLaporanTHIndividuComponent } from './senarai-laporan-th-individu/senarai-laporan-th-individu.component';
 import { KelulusanTHComponent } from './kelulusan-th/kelulusan-th.component';
 import { DetailLulusThComponent } from './detail-lulus-th/detail-lulus-th.component';
+import { DetailLaporanIndividuComponent } from './detail-laporan-individu/detail-laporan-individu.component';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { DetailLulusThComponent } from './detail-lulus-th/detail-lulus-th.compon
     KemaskiniTHComponent,
     SenaraiLaporanTHIndividuComponent,
     KelulusanTHComponent,
-    DetailLulusThComponent
+    DetailLulusThComponent,
+    DetailLaporanIndividuComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +43,9 @@ import { DetailLulusThComponent } from './detail-lulus-th/detail-lulus-th.compon
     MatNativeDateModule,
     MatButtonModule,
     MatIconModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    MatSelectModule,
+    ReactiveFormsModule
   ]
 })
 export class TugasanHarianModule { }

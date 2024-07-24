@@ -24,13 +24,14 @@ export class DetailLulusThComponent implements OnInit {
   timeOptions: string[] = [];
   masaMulaOptions: string[] = [];
   thMainId: number;
+  showSebabDitolak: boolean = false;
 
   constructor(
     private laporanTugas: TugasanHarianService,
     private datePipe: DatePipe,
     public dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
@@ -52,49 +53,69 @@ export class DetailLulusThComponent implements OnInit {
       this.tugasan = res.map(item => ({
         ...item
       }));
-      console.log(this.tugasan)
     });
   }
 
   mainData(id: number) {
     this.laporanTugas.getMainById(id).subscribe(res => {
       this.laporanMain = res
-      console.log(this.laporanMain)
     });
   }
 
-  updateSend(){
-    let hasError = false;
-  
-    for (let tugas of this.tugasan) {
-      if (!tugas.masaMula || !tugas.masaTamat || !tugas.tugasanHarian ||
-        tugas.masaMula.trim() === '' || tugas.masaTamat.trim() === '' || tugas.tugasanHarian.trim() === '') {
-        hasError = true;
-        break;
-      }
+  tolak(){
+    this.showSebabDitolak = true;
+    const ditolakButton = document.getElementById('ditolakButton');
+    if (ditolakButton) {
+      ditolakButton.classList.add('flashing');
     }
-    if (hasError) {
+
+    if (!this.mainTugasan.Remarks || this.mainTugasan.Remarks.trim() === '') {
       Swal.fire({
-        html: '<span style="font-size: 18px;">Sila pastikan semua ruangan diisi dengan lengkap sebelum disimpan.</span>',
-        icon: 'error',
+        imageUrl: 'assets/image/fill.png',
+        imageWidth: 100,  // Adjust the width as needed
+        imageHeight: 100,  // Adjust the height as needed
+        imageAlt: 'Custom Icon',
+        html: '<span style="font-size: 18px;">Sila isi sebab ditolak</span>',
         showConfirmButton: false,
-        timer: 2500,
+        timer: 2000
       });
       return;
     }
-    this.laporanTugas.updateDerafDetail(this.tugasan).subscribe(
+    this.laporanTugas.kelulusanTolak(this.thMainId, this.mainTugasan.Remarks).subscribe(
       response => {
         Swal.fire({
-          html: '<span style="font-size: 18px;">Laporan tugasan harian berjaya dihantar.</span>',
+          html: '<span style="font-size: 18px;">Status tugasan harian berjaya dikemaskini.</span>',
           icon: 'success',
           showConfirmButton: false,
           timer: 2500,
         });
-        this.router.navigate(['/senaraiDeraf']);
+        this.router.navigate(['/kelulusanTugasHarian']);
       },
       error => {
         Swal.fire({
-          html: '<span style="font-size: 18px;">Ralat berlaku semasa menghantar laporan.</span>',
+          html: '<span style="font-size: 18px;">Ralat berlaku semasa mengemaskini status.</span>',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 2500,
+        });
+      }
+    );
+  }
+
+  lulus() {
+    this.laporanTugas.kelulusanLulus(this.thMainId).subscribe(
+      response => {
+        Swal.fire({
+          html: '<span style="font-size: 18px;">Status tugasan harian berjaya dikemaskini.</span>',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 2500,
+        });
+        this.router.navigate(['/kelulusanTugasHarian']);
+      },
+      error => {
+        Swal.fire({
+          html: '<span style="font-size: 18px;">Ralat berlaku semasa mengemaskini status.</span>',
           icon: 'error',
           showConfirmButton: false,
           timer: 2500,

@@ -1,1 +1,22 @@
-<p>senarai-laporan-th-individu works!</p>
+<div class="main-content">
+    <mat-card style="padding: 50px;">
+        <mat-card class="grad">
+            <h5>Laporan Tugas Harian</h5>
+        </mat-card>
+        <table *ngIf="laporanMain.length > 0; else noData">
+            <tr>
+                <th style="width: 10%;">BIL.</th>
+                <th>TARIKH</th>
+                <th>STATUS</th>
+            </tr>
+            <tr *ngFor="let item of laporanMain; let i=index">
+                <td>{{i + 1}}</td>
+                <td><a routerLink="/laporanTHIndividu/{{item.id}}">{{item.tarikh}}</a></td>
+                <td>{{item.statusThName}}</td>
+            </tr>
+        </table>
+        <ng-template #noData>
+            <div class="no-data-message">Tiada laporan tugasan harian untuk dipaparkan.</div>
+        </ng-template>
+    </mat-card>
+</div>

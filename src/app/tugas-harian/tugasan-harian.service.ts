@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { employees } from '../models/employees.model';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { tugasHarian_Main } from '../models/tugasHarian_Main.model';
 import { tugasHarian_Detail } from '../models/tugasHarian_Detail.model';
+import { unit } from '../models/unit.model';
 
 @Injectable({
   providedIn: 'root'
@@ -77,6 +78,30 @@ export class TugasanHarianService {
 
   getMainById(id): Observable<tugasHarian_Main[]> {
     return this.httpClient.get<tugasHarian_Main[]>(this.baseUrl + '/TugasHarianMains/GetMainById/' + id);
+  }
+
+  kelulusanTolak(id,Remarks): Observable<any> {
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    return this.httpClient.put(this.baseUrl + '/TugasHarianMains/UpdatekelulusanTolak/' + id +'/' + Remarks, httpOptions);
+  }
+
+  kelulusanLulus(id): Observable<any> {
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+    return this.httpClient.put(this.baseUrl + '/TugasHarianMains/UpdatekelulusanLulus/' + id, httpOptions);
+  }
+
+  getSenaraiUnit(): Observable<any> {
+    return this.httpClient.get<unit[]>(this.baseUrl + '/Units/GetSenaraiUnit');
+  }
+
+  getSenaraiKakitangan(emp_id) {
+    return this.httpClient.get<employees[]>(this.baseUrl + '/Employees/GetSenaraiKakitangan/' + emp_id);
+  }
+  
+  ////////////////////////////////// Laporan Tugasan Harian Individu/////////////////////////////////////////////
+
+  getSenaraiLaporanIndividu(empId): Observable<tugasHarian_Main[]> {
+    return this.httpClient.get<tugasHarian_Main[]>(this.baseUrl + '/TugasHarianMains/GetSenaraiLaporanIndividu/' + empId);
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
