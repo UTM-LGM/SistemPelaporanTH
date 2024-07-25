@@ -5,7 +5,7 @@
     <nav class="main-menu">
         <ul>
             <li>
-                <a routerLink="home">
+                <a routerLink="lamanUtama">
                     <i class="fa fa-home fa-2x"></i>
                     <span class="nav-text">
                         Laman Utama
@@ -36,7 +36,7 @@
                     </span>
                 </a>
             </li>
-            <li class="has-subnav">
+            <li *ngIf="this.employees.length > 0" class="has-subnav">
                 <a routerLink="/kelulusanTugasHarian">
                     <i class="fa fa-check-circle fa-2x"></i>
                     <span class="nav-text">

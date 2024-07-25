@@ -24,8 +24,8 @@
             <tr *ngFor="let item of tugasan; let i=index">
                 <td style="text-align: center;"><input class="transparentInput" name="bil">{{i + 1}}</td>
                 <td>
-                    <textarea class="transparentInput" name="tugas" ngModel
-                        [(ngModel)]="tugasan[i].tugasanHarian" [disabled]="isDisabled"></textarea>
+                    <textarea class="transparentInput" name="tugas" ngModel [(ngModel)]="tugasan[i].tugasanHarian"
+                        [disabled]="isDisabled"></textarea>
                 </td>
                 <td>
                     <select class="custom-select" name="masaMula" [(ngModel)]="tugasan[i].masaMula" [disabled]="isDisabled" (change)="tugasan[i].masaTamat = ''; tugasan[i].filteredMasaTamatOptions = getFilteredMasaTamat(tugasan[i].masaMula)">
@@ -53,23 +53,4 @@
             </button>
         </div>
     </mat-card>
-
-    <!-- <mat-card *ngIf="checkInInfo.status">
-        <h5>Borang Laporan Tugasan Harian</h5>
-        <table style="margin-top: 20px;">
-            <tr>
-                <th style="width: 5%;">Bil.</th>
-                <th style="width: 70%;;">Aktiviti/Perkara</th>
-                <th style="width: 10%;;">Masa Mula</th>
-                <th style="width: 10%;;">Masa Tamat</th>
-            </tr>
-            <tr *ngFor="let item of tugasan; let i=index">
-                <td><input class="transparentInput" readonly>{{i + 1}}</td>
-                <td><textarea class="display" [ngxSummernote]="default" [ngxSummernoteDisabled]="true" [(ngModel)]="tugasan[i].tugasanHarian"></textarea></td>
-                <td><input class="transparentInput" readonly [(ngModel)]="tugasan[i].masaMula"/></td>
-                <td><input class="transparentInput" readonly [(ngModel)]="tugasan[i].masaTamat"/></td>
-            </tr>
-        </table>
-        <h6 style="margin-top: 20px;font-size: 12px;">Maklumat di atas telah direkodkan sebagai laporan tugasan hari ini</h6>
-    </mat-card> -->
 </div>

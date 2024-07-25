@@ -5,6 +5,7 @@ import { TugasanHarianService } from '../tugasan-harian.service';
 import { unit } from 'src/app/models/unit.model';
 import { DatePipe } from '@angular/common';
 import { MatSelect } from '@angular/material/select';
+import { AuthServiceService } from 'src/app/auth/auth-service.service';
 
 @Component({
   selector: 'app-kelulusan-th',
@@ -27,23 +28,28 @@ export class KelulusanTHComponent implements OnInit {
 
   constructor(
     private laporanTugas: TugasanHarianService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private authService: AuthServiceService
   ) { }
 
   ngOnInit(): void {
-    this.currentUser.empEmailLogin = 'amelia@lgm.gov.my';
     this.laporanTugas.getSenaraiUnit().subscribe(unit => {
       this.units = unit;
     });
-    this.laporanTugas.getKakitanganByEmail(this.currentUser.empEmailLogin).subscribe(res => {
-      this.currentUser = res;
-      this.laporanTugas.getSenaraiKakitangan(this.currentUser.empId).subscribe(staff => {
-        this.employees = staff;
-      })
-      this.laporanTugas.getSenaraiKelulusan(this.currentUser.empId).subscribe(lulus => {
-        this.laporanMain = lulus;
-        this.filteredLaporanMain = lulus;
-      })
+    this.authService.currentEmail.subscribe(email => {
+      this.currentUser.empEmailLogin = email;
+      if (this.currentUser.empEmailLogin) {
+        this.laporanTugas.getKakitanganByEmail(this.currentUser.empEmailLogin).subscribe(res => {
+          this.currentUser = res;
+          this.laporanTugas.getSenaraiKakitangan(this.currentUser.empId).subscribe(staff => {
+            this.employees = staff;
+          })
+          this.laporanTugas.getSenaraiKelulusan(this.currentUser.empId).subscribe(lulus => {
+            this.laporanMain = lulus;
+            this.filteredLaporanMain = lulus;
+          })
+        });
+      }
     });
   }
 
@@ -86,6 +92,6 @@ export class KelulusanTHComponent implements OnInit {
 
   tolak() {
   }
-  
+
 
 }

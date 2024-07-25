@@ -8,6 +8,7 @@ import { TugasanHarianService } from '../tugasan-harian.service';
 import { tugasHarian_Main } from 'src/app/models/tugasHarian_Main.model';
 import { tugasHarian_Detail } from 'src/app/models/tugasHarian_Detail.model';
 import { employees } from 'src/app/models/employees.model';
+import { AuthServiceService } from 'src/app/auth/auth-service.service';
 
 @Component({
   selector: 'app-kemaskini-th',
@@ -31,21 +32,26 @@ export class KemaskiniTHComponent implements OnInit {
     private datePipe: DatePipe,
     public dialog: MatDialog,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthServiceService
   ) { }
 
   ngOnInit(): void {
-    this.currentUser.empEmailLogin = 'amelia@lgm.gov.my';
-    this.route.paramMap.subscribe(params => {
-      this.thMainId = +params.get('id')!;
-      this.loadData(this.thMainId);
+    this.authService.currentEmail.subscribe(email => {
+      this.currentUser.empEmailLogin = email;
+      if (this.currentUser.empEmailLogin) {
+        this.route.paramMap.subscribe(params => {
+          this.thMainId = +params.get('id')!;
+          this.loadData(this.thMainId);
 
-      this.dateDisplay = this.datePipe.transform(this.today, 'EEEE, dd MMMM yyyy', 'ms') || '';
-      this.generateTimeOptions();
-      this.tugasan = [{ id: 0, thMainId: 0, masaMula: "", masaTamat: "", tugasanHarian: "" }];
-      this.laporanTugas.getKakitanganByEmail(this.currentUser.empEmailLogin).subscribe(res => {
-        this.currentUser = res;
-      });
+          this.dateDisplay = this.datePipe.transform(this.today, 'EEEE, dd MMMM yyyy', 'ms') || '';
+          this.generateTimeOptions();
+          this.tugasan = [{ id: 0, thMainId: 0, masaMula: "", masaTamat: "", tugasanHarian: "" }];
+          this.laporanTugas.getKakitanganByEmail(this.currentUser.empEmailLogin).subscribe(res => {
+            this.currentUser = res;
+          });
+        });
+      }
     });
   }
 
@@ -106,7 +112,7 @@ export class KemaskiniTHComponent implements OnInit {
 
   update() {
     let hasError = false;
-  
+
     for (let tugas of this.tugasan) {
       if (!tugas.masaMula || !tugas.masaTamat || !tugas.tugasanHarian ||
         tugas.masaMula.trim() === '' || tugas.masaTamat.trim() === '' || tugas.tugasanHarian.trim() === '') {
@@ -130,7 +136,7 @@ export class KemaskiniTHComponent implements OnInit {
           icon: 'success',
           showConfirmButton: false,
           timer: 2500,
-          
+
         });
       },
       error => {
@@ -144,9 +150,9 @@ export class KemaskiniTHComponent implements OnInit {
     );
   }
 
-  updateSend(){
+  updateSend() {
     let hasError = false;
-  
+
     for (let tugas of this.tugasan) {
       if (!tugas.masaMula || !tugas.masaTamat || !tugas.tugasanHarian ||
         tugas.masaMula.trim() === '' || tugas.masaTamat.trim() === '' || tugas.tugasanHarian.trim() === '') {

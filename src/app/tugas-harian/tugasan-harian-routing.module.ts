@@ -7,6 +7,7 @@ import { SenaraiLaporanTHIndividuComponent } from './senarai-laporan-th-individu
 import { KelulusanTHComponent } from './kelulusan-th/kelulusan-th.component';
 import { DetailLulusThComponent } from './detail-lulus-th/detail-lulus-th.component';
 import { DetailLaporanIndividuComponent } from './detail-laporan-individu/detail-laporan-individu.component';
+import { LamanUtamaComponent } from './laman-utama/laman-utama.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'senaraiDeraf', component: SenaraiDerafpembetulanComponent },
   { path: 'senaraiLaporanIndividu', component: SenaraiLaporanTHIndividuComponent },
   { path: 'kelulusanTugasHarian', component: KelulusanTHComponent },
+  { path: 'lamanUtama', component: LamanUtamaComponent },
 ];
 
 @NgModule({

@@ -76,6 +76,10 @@ export class TugasanHarianService {
     return this.httpClient.get<tugasHarian_Main[]>(this.baseUrl + '/TugasHarianMains/GetSenaraiKelulusan/' + empId);
   }
 
+  getSenaraiPelulus(empId): Observable<employees[]> {
+    return this.httpClient.get<employees[]>(this.baseUrl + '/Employees/GetSenaraiPelulus/' + empId);
+  }
+
   getTugasanDetailById(id): Observable<tugasHarian_Detail[]> {
     return this.httpClient.get<tugasHarian_Detail[]>(this.baseUrl + '/TugasHarianDetails/GetTugasanDetailsById/' + id);
   }

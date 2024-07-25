@@ -101,9 +101,11 @@ export class AuthGuardService {
     //const token = localStorage.getItem('idToken')
     if (token != null) {
       const decodedToken: any = jwtDecode(token)
+      const email = decodedToken.preferred_username;
       //console.log("idToken", decodedToken)
-      console.log("AD", decodedToken.preferred_username)
-      return decodedToken.preferred_username
+      this.authService.setEmail(email);
+      console.log("AD", email)
+      return email;
     }
   }
 }

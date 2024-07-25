@@ -12,6 +12,8 @@ import { Renderer2 } from '@angular/core';
 import { ExistDataComponent } from 'src/app/dialogbox/exist-data/exist-data.component';
 import { ExistDataHantarComponent } from 'src/app/dialogbox/exist-data-hantar/exist-data-hantar.component';
 import { ExistDrafComponent } from 'src/app/dialogbox/exist-draf/exist-draf.component';
+import { AuthServiceService } from 'src/app/auth/auth-service.service';
+import { userDTO } from 'src/app/models/userDTO.model';
 
 @Component({
   selector: 'app-tambah-tugas-harian',
@@ -22,6 +24,7 @@ export class TambahTugasHarianComponent implements OnInit {
 
   @ViewChild('sweetAlertContainer', { static: false }) sweetAlertContainer!: ElementRef;
 
+  user: userDTO = {} as userDTO;
   currentUser: employees = {} as employees;
   tugasan: tugasHarian_Detail[] = [];
   mainTugasan: tugasHarian_Main = {} as tugasHarian_Main;
@@ -32,47 +35,51 @@ export class TambahTugasHarianComponent implements OnInit {
   masaMulaOptions: string[] = [];
   dateExistStatusThId: number | null = null;
   isDisabled: boolean = false;
+  userEmail;
 
   constructor(
     private laporanTugas: TugasanHarianService,
     private datePipe: DatePipe,
     public dialog: MatDialog,
     private router: Router,
-    private renderer: Renderer2
+    private authService: AuthServiceService
   ) { }
 
   ngOnInit(): void {
-    this.currentUser.empEmailLogin = 'amelia@lgm.gov.my';
     this.dateDisplay = this.datePipe.transform(this.today, 'EEEE, dd MMMM yyyy', 'ms') || '';
     this.generateTimeOptions();
     this.tugasan = [{ id: 0, thMainId: 0, masaMula: "", masaTamat: "", tugasanHarian: "" }];
-    this.laporanTugas.getKakitanganByEmail(this.currentUser.empEmailLogin).subscribe(res => {
-      this.currentUser = res;
-      //console.log(res)
-      this.laporanTugas.checkIfDateExist(this.currentUser.empId).subscribe(dateExist => {
-        this.dateExistStatusThId = dateExist?.statusThId || null;
-        if (dateExist && Object.keys(dateExist).length > 0) {
-          if (dateExist.statusThId == 1) {
-            const dialogRef = this.dialog.open(ExistDataComponent, {
-              width: '445px',
-            });
-          } else if (dateExist.statusThId == 2) {
-            const dialogRef = this.dialog.open(ExistDataHantarComponent, {
-              width: '445px',
-            });
-          }
-        }
-      });
-      this.laporanTugas.checkBeforeFilled(this.currentUser.empId).subscribe(not => {
-        if(not){
-          const dialogRef = this.dialog.open(ExistDrafComponent, {
-            width: '445px',
+    this.authService.currentEmail.subscribe(email => {
+      this.currentUser.empEmailLogin = email;
+      if (this.currentUser.empEmailLogin) {
+        this.laporanTugas.getKakitanganByEmail(this.currentUser.empEmailLogin).subscribe(res => {
+          this.currentUser = res;
+          this.laporanTugas.checkIfDateExist(this.currentUser.empId).subscribe(dateExist => {
+            this.dateExistStatusThId = dateExist?.statusThId || null;
+            if (dateExist && Object.keys(dateExist).length > 0) {
+              if (dateExist.statusThId == 1) {
+                const dialogRef = this.dialog.open(ExistDataComponent, {
+                  width: '445px',
+                });
+              } else if (dateExist.statusThId == 2) {
+                const dialogRef = this.dialog.open(ExistDataHantarComponent, {
+                  width: '445px',
+                });
+              }
+            }
           });
-          this.isDisabled = true;
-        }
-        //console.log("not send", not)
-      })
-    });
+          this.laporanTugas.checkBeforeFilled(this.currentUser.empId).subscribe(not => {
+            if (not) {
+              const dialogRef = this.dialog.open(ExistDrafComponent, {
+                width: '445px',
+              });
+              this.isDisabled = true;
+            }
+            //console.log("not send", not)
+          })
+        });
+      }
+    })
   }
 
   generateTimeOptions() {

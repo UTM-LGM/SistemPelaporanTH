@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { employees } from 'src/app/models/employees.model';
 import { tugasHarian_Detail } from 'src/app/models/tugasHarian_Detail.model';
 import { tugasHarian_Main } from 'src/app/models/tugasHarian_Main.model';
+import { AuthServiceService } from 'src/app/auth/auth-service.service';
 
 @Component({
   selector: 'app-detail-lulus-th',
@@ -32,19 +33,24 @@ export class DetailLulusThComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
+    private authService: AuthServiceService
   ) { }
 
   ngOnInit(): void {
-    this.currentUser.empEmailLogin = 'amelia@lgm.gov.my';
-    this.route.paramMap.subscribe(params => {
-      this.thMainId = +params.get('id')!;
-      this.loadData(this.thMainId);
-      this.mainData(this.thMainId)
-      this.dateDisplay = this.datePipe.transform(this.today, 'EEEE, dd MMMM yyyy', 'ms') || '';
-      this.tugasan = [{ id: 0, thMainId: 0, masaMula: "", masaTamat: "", tugasanHarian: "" }];
-      this.laporanTugas.getKakitanganByEmail(this.currentUser.empEmailLogin).subscribe(res => {
-        this.currentUser = res;
-      });
+    this.authService.currentEmail.subscribe(email => {
+      this.currentUser.empEmailLogin = email;
+      if (this.currentUser.empEmailLogin) {
+        this.route.paramMap.subscribe(params => {
+          this.thMainId = +params.get('id')!;
+          this.loadData(this.thMainId);
+          this.mainData(this.thMainId)
+          this.dateDisplay = this.datePipe.transform(this.today, 'EEEE, dd MMMM yyyy', 'ms') || '';
+          this.tugasan = [{ id: 0, thMainId: 0, masaMula: "", masaTamat: "", tugasanHarian: "" }];
+          this.laporanTugas.getKakitanganByEmail(this.currentUser.empEmailLogin).subscribe(res => {
+            this.currentUser = res;
+          });
+        });
+      }
     });
   }
 
@@ -62,7 +68,7 @@ export class DetailLulusThComponent implements OnInit {
     });
   }
 
-  tolak(){
+  tolak() {
     this.showSebabDitolak = true;
     const ditolakButton = document.getElementById('ditolakButton');
     if (ditolakButton) {

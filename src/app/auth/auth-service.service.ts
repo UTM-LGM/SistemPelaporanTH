@@ -4,6 +4,7 @@ import { MsalService } from '@azure/msal-angular';
 import { jwtDecode } from 'jwt-decode';
 import { BehaviorSubject } from 'rxjs';
 import { employees } from '../models/employees.model';
+import { userDTO } from '../models/userDTO.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,29 +14,35 @@ export class AuthServiceService {
   private loggedInSource = new BehaviorSubject(false);
   currentLoggedIn = this.loggedInSource.asObservable();
 
-  private userEmailSubject = new BehaviorSubject<employees>(new employees());
-  userEmail$ = this.userEmailSubject.asObservable();
-  
-  constructor(
-    private httpClient : HttpClient, 
-    private msalService: MsalService
-  ) { }
+  private emailSource = new BehaviorSubject<string | null>(null);
+  currentEmail = this.emailSource.asObservable();
 
-  getUserEmail(): string | null {
+  constructor(
+    private httpClient: HttpClient,
+    private msalService: MsalService
+  ) {
+    const storedEmail = localStorage.getItem('email');
+    if (storedEmail) {
+      this.emailSource.next(storedEmail);
+    }
+  }
+
+  setEmail(email: string) {
+    localStorage.setItem('email', email);
+    this.emailSource.next(email);
+  }
+
+  setLoggedIn(loggedIn: boolean) {
+    this.loggedInSource.next(loggedIn);
+  }
+
+  initialize() {
     const accounts = this.msalService.instance.getAllAccounts();
     if (accounts.length > 0) {
-      const userEmail = this.decodeIdToken(accounts[0].idToken); // Decode token and get email
-      return userEmail;
+      const email = accounts[0].username;
+      this.setEmail(email);
+      this.setLoggedIn(true);
     }
-    return null;
   }
 
-  decodeIdToken(token: string): string {
-    const decodedToken: any = jwtDecode(token);
-    return decodedToken.preferred_username;
-  }
-
-  setUserEmail(email: employees) {
-    this.userEmailSubject.next(email);
-  }
 }

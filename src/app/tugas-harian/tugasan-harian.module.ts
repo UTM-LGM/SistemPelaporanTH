@@ -19,7 +19,9 @@ import { KelulusanTHComponent } from './kelulusan-th/kelulusan-th.component';
 import { DetailLulusThComponent } from './detail-lulus-th/detail-lulus-th.component';
 import { DetailLaporanIndividuComponent } from './detail-laporan-individu/detail-laporan-individu.component';
 import { MatSelectModule } from '@angular/material/select';
-
+import { LamanUtamaComponent } from './laman-utama/laman-utama.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { MatSelectModule } from '@angular/material/select';
     SenaraiLaporanTHIndividuComponent,
     KelulusanTHComponent,
     DetailLulusThComponent,
-    DetailLaporanIndividuComponent
+    DetailLaporanIndividuComponent,
+    LamanUtamaComponent
   ],
   imports: [
     CommonModule,
@@ -46,6 +49,8 @@ import { MatSelectModule } from '@angular/material/select';
     NgxMaterialTimepickerModule,
     MatSelectModule,
     ReactiveFormsModule,
+    MatGridListModule,
+    MatToolbarModule,
   ]
 })
 export class TugasanHarianModule { }

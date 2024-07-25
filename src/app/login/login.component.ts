@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { MSAL_GUARD_CONFIG, MsalGuardConfiguration, MsalService } from '@azure/msal-angular';
 import { RedirectRequest } from '@azure/msal-browser';
 import { AuthServiceService } from '../auth/auth-service.service';
+import { jwtDecode } from 'jwt-decode';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -11,11 +13,13 @@ import { AuthServiceService } from '../auth/auth-service.service';
 })
 export class LoginComponent implements OnInit {
   isLoading: boolean = false;
+
   constructor(
     @Inject(MSAL_GUARD_CONFIG) private msalGuardConfig:MsalGuardConfiguration,  
     private msalService: MsalService,
     private router: Router, 
-    private authService: AuthServiceService
+    private authService: AuthServiceService,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -37,7 +41,9 @@ export class LoginComponent implements OnInit {
       next: () => { 
         const accounts = this.msalService.instance.getAllAccounts(); 
         if (accounts.length > 0) { 
-          this.router.navigateByUrl('/sistemPelaporanTH');
+          this.router.navigateByUrl('/sistemPelaporanTH').then(() => {
+            window.location.reload(); // Auto-refresh the page
+          });
           this.isLoading = false; 
         } else { 
           this.router.navigateByUrl('/login');
@@ -50,16 +56,5 @@ export class LoginComponent implements OnInit {
       }
     });
   }
-
-  getUserEmail(): string | null {
-    const accounts = this.msalService.instance.getAllAccounts();
-    if (accounts.length > 0 && typeof accounts[0].idToken === 'string') {
-      const userEmail = this.authService.decodeIdToken(accounts[0].idToken); // Decode token and get email
-      console.log("email",userEmail)
-      return userEmail;
-    }
-    return null;
-  }
-      
 
 }
