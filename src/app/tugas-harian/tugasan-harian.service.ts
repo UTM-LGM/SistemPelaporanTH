@@ -28,6 +28,10 @@ export class TugasanHarianService {
     return this.httpClient.get<tugasHarian_Main>(this.baseUrl + '/TugasHarianMains/GetTugasHarianExist/' + empId);
   }
 
+  checkBeforeFilled(empId): Observable<tugasHarian_Main> {
+    return this.httpClient.get<tugasHarian_Main>(this.baseUrl + '/TugasHarianMains/GetBeforeFilled/' + empId);
+  }
+
   simpanDeraf(data: tugasHarian_Main): Observable<tugasHarian_Main> {
     var body = JSON.stringify(data);
     const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };

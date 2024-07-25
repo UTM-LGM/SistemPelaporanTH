@@ -13,13 +13,13 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { RouterModule } from '@angular/router';
 import { KemaskiniTHComponent } from './kemaskini-th/kemaskini-th.component';
 import { SenaraiLaporanTHIndividuComponent } from './senarai-laporan-th-individu/senarai-laporan-th-individu.component';
 import { KelulusanTHComponent } from './kelulusan-th/kelulusan-th.component';
 import { DetailLulusThComponent } from './detail-lulus-th/detail-lulus-th.component';
 import { DetailLaporanIndividuComponent } from './detail-laporan-individu/detail-laporan-individu.component';
 import { MatSelectModule } from '@angular/material/select';
+
 
 @NgModule({
   declarations: [
@@ -45,7 +45,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatIconModule,
     NgxMaterialTimepickerModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class TugasanHarianModule { }

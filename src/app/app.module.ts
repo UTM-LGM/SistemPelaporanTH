@@ -8,12 +8,22 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
 import { FormsModule } from '@angular/forms';
 import { DatePipe, registerLocaleData } from '@angular/common';
 import localeMs from '@angular/common/locales/ms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NotisPadamComponent } from './dialogbox/notis-padam/notis-padam.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { ExistDataComponent } from './dialogbox/exist-data/exist-data.component';
 import { ExistDataHantarComponent } from './dialogbox/exist-data-hantar/exist-data-hantar.component';
+import { ExistDrafComponent } from './dialogbox/exist-draf/exist-draf.component';
+import { MsalGuard, MsalInterceptor, MsalModule, MsalRedirectComponent } from '@azure/msal-angular';
+import { BrowserCacheLocation, InteractionType, PublicClientApplication } from '@azure/msal-browser';
+import { LoginComponent } from './login/login.component';
+import { TokenInterceptor } from './interceptor/token.interceptor';
+
+const isIE =
+  window.navigator.userAgent.indexOf("MSIE ") > -1 ||
+  window.navigator.userAgent.indexOf("Trident/") > -1;
+
 
 registerLocaleData(localeMs, 'ms');
 
@@ -24,6 +34,8 @@ registerLocaleData(localeMs, 'ms');
     NotisPadamComponent,
     ExistDataComponent,
     ExistDataHantarComponent,
+    ExistDrafComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -33,11 +45,44 @@ registerLocaleData(localeMs, 'ms');
     FormsModule,
     HttpClientModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    MsalModule.forRoot( 
+      new PublicClientApplication({ 
+        auth: { 
+          clientId: "2c5e5f1f-1ede-413f-a396-a2f7e103de3c",
+          authority:  "https://login.microsoftonline.com/22f0712b-5def-4d21-a16e-30e5e334541e",
+          redirectUri: "http://localhost:4200/login", 
+        }, 
+        cache: {
+          cacheLocation: BrowserCacheLocation.LocalStorage, 
+          storeAuthStateInCookie: isIE, 
+        }, 
+      }), 
+      { 
+        interactionType: InteractionType.Redirect,
+        authRequest: { 
+          scopes: ["api://542a2ac7-84c9-4445-bd6e-bd940e64d609/Admin.Read"], 
+        }, 
+      }, 
+      {
+        interactionType: InteractionType.Redirect,
+        protectedResourceMap: new Map([ 
+          ["https://graph.microsoft.com/User.Read", ["User.Read"]], 
+        ]),
+      } ,
+      ),
   ],
   providers: [
+    {
+      provide:HTTP_INTERCEPTORS,useClass: MsalInterceptor,multi: true
+    },
+    {
+      provide:HTTP_INTERCEPTORS,useClass: TokenInterceptor,multi: true
+    },
+    MsalGuard, 
     DatePipe,
-    { provide: LOCALE_ID, useValue: 'ms' }],
-  bootstrap: [AppComponent]
+    { provide: LOCALE_ID, useValue: 'ms' }
+  ],
+  bootstrap: [AppComponent, MsalRedirectComponent]
 })
 export class AppModule { }

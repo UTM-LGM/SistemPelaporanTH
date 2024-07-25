@@ -1,0 +1,13 @@
+
+<div class="login-container">
+    <div class="login-content" *ngIf="!isLoading">
+      <!-- <div class="login-content"> -->
+      <img src="assets/image/lgm-logo.png" alt="Logo" class="logo">
+      <h3 class="title">Sistem Pelaporan Tugas Harian</h3>
+      <button (click)="loginSSO()" class="login-button">Log In</button>
+    </div>
+    <div class="loading-spinner" *ngIf="isLoading">
+      <div class="spinner"></div>
+    </div>
+  </div>
+  

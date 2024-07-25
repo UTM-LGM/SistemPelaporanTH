@@ -1,0 +1,70 @@
+.title {
+    font-size: 1.7rem;
+    margin-bottom: 1.5rem;
+    color: #313336;
+  }
+  
+  .login-button {
+    background-color: #137f4d;
+    color: white;
+    border: none;
+    padding: 0.75rem 2.0rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .login-button:hover {
+    background-color: #0e452c;
+  }
+
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image:url('/assets/image/login-background.jpg') !important;
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    background-size: 105% 129%;
+    background-position: center;
+  }
+
+  
+  .login-content {
+    text-align: center;
+    background-color: #cee7db;
+    padding: 4rem;
+    border-radius: 48px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    width: 38%; /* Adjust width as needed */
+    height: auto;  /* Adjust height as needed */
+    border: 2px solid #cee7db; /* Add this line for the border */
+}
+
+  
+.logo {
+  width: 160px;
+  margin-bottom: 1rem;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust as needed */
+}
+
+.spinner {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

@@ -23,7 +23,6 @@ export class SenaraiLaporanTHIndividuComponent implements OnInit {
       this.currentUser = res;
     this.laporanTugas.getSenaraiLaporanIndividu(this.currentUser.empId).subscribe(report => {
       this.laporanMain = report
-      console.log(report)
     })
     });
   }

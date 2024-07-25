@@ -1,64 +1,69 @@
-<nav class="main-menu" >
-  <ul>
-      <li>
-          <a routerLink="home" >
-              <i class="fa fa-home fa-2x"></i>
-              <span class="nav-text">
-                  Laman Utama
-              </span>
-          </a>
-      </li>
-      <li>
-        <a routerLink="profil" >
-             <i class="fa fa-user fa-2x"></i>
-             <span class="nav-text">
-                 Profil
-             </span>
-         </a>
-     </li>      
-     <li class="has-subnav" >
-        <a routerLink="/tambahTugasanHarian">
-           <i class="fa fa-plus-circle fa-2x"></i>
-            <span class="nav-text">
-                Tambah Tugasan Harian
-            </span>
-        </a>
-    </li>
-    <li class="has-subnav" >
-        <a routerLink="/senaraiDeraf">
-           <i class="fa fa-list fa-2x"></i>
-            <span class="nav-text">
-                Senarai Deraf / Pembetulan
-            </span>
-        </a>
-    </li>
-    <li class="has-subnav" >
-        <a routerLink="/kelulusanTugasHarian">
-           <i class="fa fa-check-circle fa-2x"></i>
-            <span class="nav-text">
-                Kelulusan Tugas Harian
-            </span>
-        </a>
-    </li>
-    <li class="has-subnav" >
-        <a routerLink="/senaraiLaporanIndividu">
-           <i class="fa fa-folder-open fa-2x"></i>
-            <span class="nav-text">
-                Senarai Laporan
-            </span>
-        </a>
-    </li>
-  </ul>
-  <ul class="logout" >
-    <li>
-       <a>
-             <i class="fa fa-sign-out fa-2x"></i>
-            <span class="nav-text">
-                Log Keluar
-            </span>
-        </a>
-    </li>  
-</ul>
-</nav>
+<div *ngIf="!isAuthenticated(); else loggedIn">
+    <router-outlet></router-outlet>
+</div>
+<ng-template #loggedIn>
+    <nav class="main-menu">
+        <ul>
+            <li>
+                <a routerLink="home">
+                    <i class="fa fa-home fa-2x"></i>
+                    <span class="nav-text">
+                        Laman Utama
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a routerLink="profil">
+                    <i class="fa fa-user fa-2x"></i>
+                    <span class="nav-text">
+                        Profil
+                    </span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a routerLink="/tambahTugasanHarian">
+                    <i class="fa fa-plus-circle fa-2x"></i>
+                    <span class="nav-text">
+                        Tambah Tugasan Harian
+                    </span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a routerLink="/senaraiDeraf">
+                    <i class="fa fa-list fa-2x"></i>
+                    <span class="nav-text">
+                        Senarai Deraf / Pembetulan
+                    </span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a routerLink="/kelulusanTugasHarian">
+                    <i class="fa fa-check-circle fa-2x"></i>
+                    <span class="nav-text">
+                        Kelulusan Tugas Harian
+                    </span>
+                </a>
+            </li>
+            <li class="has-subnav">
+                <a routerLink="/senaraiLaporanIndividu">
+                    <i class="fa fa-folder-open fa-2x"></i>
+                    <span class="nav-text">
+                        Senarai Laporan
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <ul class="logout">
+            <li>
+                <a (click)="logOut()">
+                    <i class="fa fa-sign-out fa-2x"></i>
+                    <span class="nav-text">
+                        Log Keluar
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 
-<router-outlet></router-outlet>
+    <router-outlet></router-outlet>
+</ng-template>

@@ -7,40 +7,46 @@
         <div>
             <mat-form-field>
                 <mat-label>Unit</mat-label>
-                <mat-select [(value)]="selectedUnitId">
+                <mat-select [(ngModel)]="selectedUnitId" (ngModelChange)="filterLaporanByUnit()">
                     <mat-option *ngFor="let item of units" [value]="item.unit_id">{{item.instant}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field style="width: 510px;margin-left: 10px;">
                 <mat-label>Nama Penjawat</mat-label>
-                <mat-select [(value)]="selectedEmpId">
+                <mat-select [(ngModel)]="selectedEmpId" (ngModelChange)="filterLaporanByName()">
                     <mat-option *ngFor="let item of employees" [value]="item.empId">{{item.empName}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field style="margin-left: 10px;">
                 <mat-label>Tarikh</mat-label>
-                <input matInput [matDatepicker]="tarikhPicker" name="selectedDate" [(ngModel)]="selectedTarikh">
+                <input matInput [matDatepicker]="tarikhPicker" name="selectedDate" [(ngModel)]="selectedTarikh" (ngModelChange)="filterLaporanByTarikh()">
                 <mat-datepicker-toggle matSuffix [for]="tarikhPicker"></mat-datepicker-toggle>
                 <mat-datepicker #tarikhPicker></mat-datepicker>
             </mat-form-field>
-            <button type="button" class="btn btn-success" style="margin-left: 27px;width: 130px;" (click)="cari()">
-                Cari
-            </button>
         </div>
-        <table *ngIf="laporanMain.length > 0; else noData">
+        <table *ngIf="filteredLaporanMain.length > 0; else noData">
             <tr>
                 <th style="width: 10%;">BIL.</th>
                 <th>TARIKH</th>
                 <th>NAMA</th>
                 <th>STATUS</th>
-                <th>KELULUSAN</th>
+                <!-- <th colspan="2">KELULUSAN</th> -->
             </tr>
-            <tr *ngFor="let item of laporanMain; let i=index">
+            <tr *ngFor="let item of filteredLaporanMain; let i=index">
                 <td>{{i + 1}}</td>
                 <td><a routerLink="/kelulusanTH/{{item.id}}">{{item.tarikh}}</a></td>
                 <td>{{item.empName}}</td>
                 <td>{{item.statusThName}}</td>
-                <td></td>
+                <!-- <td style="text-align: center;">
+                    <button mat-icon-button >
+                        <img src="assets/image/approve.png" alt="Approve" width="24" height="24">
+                    </button>
+                </td>
+                <td style="text-align: center;">
+                    <button mat-icon-button (click)="tolak()">
+                        <img src="assets/image/notapprove.png" alt="Not Approve" width="35" height="35">
+                    </button>
+                </td> -->
             </tr>
         </table>
         <ng-template #noData>

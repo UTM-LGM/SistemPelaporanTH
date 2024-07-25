@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { Renderer2 } from '@angular/core';
 import { ExistDataComponent } from 'src/app/dialogbox/exist-data/exist-data.component';
 import { ExistDataHantarComponent } from 'src/app/dialogbox/exist-data-hantar/exist-data-hantar.component';
+import { ExistDrafComponent } from 'src/app/dialogbox/exist-draf/exist-draf.component';
 
 @Component({
   selector: 'app-tambah-tugas-harian',
@@ -30,6 +31,7 @@ export class TambahTugasHarianComponent implements OnInit {
   timeOptions: string[] = [];
   masaMulaOptions: string[] = [];
   dateExistStatusThId: number | null = null;
+  isDisabled: boolean = false;
 
   constructor(
     private laporanTugas: TugasanHarianService,
@@ -46,6 +48,7 @@ export class TambahTugasHarianComponent implements OnInit {
     this.tugasan = [{ id: 0, thMainId: 0, masaMula: "", masaTamat: "", tugasanHarian: "" }];
     this.laporanTugas.getKakitanganByEmail(this.currentUser.empEmailLogin).subscribe(res => {
       this.currentUser = res;
+      //console.log(res)
       this.laporanTugas.checkIfDateExist(this.currentUser.empId).subscribe(dateExist => {
         this.dateExistStatusThId = dateExist?.statusThId || null;
         if (dateExist && Object.keys(dateExist).length > 0) {
@@ -60,6 +63,15 @@ export class TambahTugasHarianComponent implements OnInit {
           }
         }
       });
+      this.laporanTugas.checkBeforeFilled(this.currentUser.empId).subscribe(not => {
+        if(not){
+          const dialogRef = this.dialog.open(ExistDrafComponent, {
+            width: '445px',
+          });
+          this.isDisabled = true;
+        }
+        //console.log("not send", not)
+      })
     });
   }
 
