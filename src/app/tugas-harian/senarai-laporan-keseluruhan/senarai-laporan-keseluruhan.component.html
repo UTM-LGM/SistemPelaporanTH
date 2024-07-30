@@ -2,29 +2,18 @@
 <div class="main-content">
     <mat-card style="padding: 50px;">
         <mat-card class="grad">
-            <h5>Kelulusan Tugas Harian</h5>
+            <h5>Laporan Tugas Harian</h5>
         </mat-card>
         <br>
-        <div>
-            <mat-form-field>
-                <mat-label>Unit</mat-label>
-                <mat-select [(ngModel)]="selectedUnitId" (ngModelChange)="filterLaporanByUnit()">
-                    <mat-option *ngFor="let item of duplicateUnitIds" [value]="item.unitId">{{item.unitName}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field style="width: 510px;margin-left: 10px;">
+        <div style="text-align: center;">
+            <mat-form-field appearance="fill" style="width: 600px;">
                 <mat-label>Nama Penjawat</mat-label>
                 <mat-select [(ngModel)]="selectedEmpId" (ngModelChange)="filterLaporanByName()">
                     <mat-option *ngFor="let item of employees" [value]="item.empId">{{item.empName}}</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field style="margin-left: 10px;">
-                <mat-label>Tarikh</mat-label>
-                <input matInput [matDatepicker]="tarikhPicker" name="selectedDate" [(ngModel)]="selectedTarikh" (ngModelChange)="filterLaporanByTarikh()">
-                <mat-datepicker-toggle matSuffix [for]="tarikhPicker"></mat-datepicker-toggle>
-                <mat-datepicker #tarikhPicker></mat-datepicker>
-            </mat-form-field>
         </div>
+        <br>
         <table *ngIf="filteredLaporanMain.length > 0; else noData">
             <tr>
                 <th style="width: 10%;">BIL.</th>
@@ -35,7 +24,7 @@
             </tr>
             <tr *ngFor="let item of filteredLaporanMain; let i=index">
                 <td>{{i + 1}}</td>
-                <td><a routerLink="/kelulusanTH/{{item.id}}">{{item.tarikh}}</a></td>
+                <td><a routerLink="/laporanTHIndividu/{{item.id}}">{{item.tarikh}}</a></td>
                 <td>{{item.empName}}</td>
                 <td>{{item.statusThName}}</td>
                 <!-- <td style="text-align: center;">
@@ -51,7 +40,7 @@
             </tr>
         </table>
         <ng-template #noData>
-            <div class="no-data-message">Tiada tugasan harian untuk diluluskan.</div>
+            <div class="no-data-message">Tiada rekod harian</div>
         </ng-template>
     </mat-card>
 </div>

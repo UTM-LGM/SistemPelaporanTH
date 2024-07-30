@@ -8,7 +8,6 @@ import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
 import { NotisPadamComponent } from 'src/app/dialogbox/notis-padam/notis-padam.component';
 import { Router } from '@angular/router';
-import { Renderer2 } from '@angular/core';
 import { ExistDataComponent } from 'src/app/dialogbox/exist-data/exist-data.component';
 import { ExistDataHantarComponent } from 'src/app/dialogbox/exist-data-hantar/exist-data-hantar.component';
 import { ExistDrafComponent } from 'src/app/dialogbox/exist-draf/exist-draf.component';
@@ -23,6 +22,10 @@ import { userDTO } from 'src/app/models/userDTO.model';
 export class TambahTugasHarianComponent implements OnInit {
 
   @ViewChild('sweetAlertContainer', { static: false }) sweetAlertContainer!: ElementRef;
+
+  default: any = {
+    airMode: true
+  };
 
   user: userDTO = {} as userDTO;
   currentUser: employees = {} as employees;
@@ -136,7 +139,7 @@ export class TambahTugasHarianComponent implements OnInit {
       this.router.navigate(['/senaraiDeraf']);
       return;
     }
-    else if (this.dateExistStatusThId === 2) {
+    else if (this.dateExistStatusThId === 2 || this.dateExistStatusThId === 3 || this.dateExistStatusThId === 4 || this.dateExistStatusThId === 5 || this.dateExistStatusThId === 6 || this.dateExistStatusThId === 7 || this.dateExistStatusThId === 9 || this.dateExistStatusThId === 9 || this.dateExistStatusThId === 10 || this.dateExistStatusThId === 11 ) {
       Swal.fire({
         html: '<span style="font-size: 18px;">Tidak boleh disimpan kerana tugasan harian pada hari ini telah dihantar</span>',
         icon: 'error',
@@ -192,7 +195,7 @@ export class TambahTugasHarianComponent implements OnInit {
             imageAlt: 'Custom Icon',
             html: '<span style="font-size: 18px;">Tugasan harian telah disimpan</span>',
             showConfirmButton: false,
-            timer: 2000
+            timer: 1800
           });
         }, error => {
           console.error('Error saving details:', error);
@@ -218,9 +221,9 @@ export class TambahTugasHarianComponent implements OnInit {
       this.router.navigate(['/senaraiDeraf']);
       return;
     }
-    else if (this.dateExistStatusThId === 2) {
+    else if (this.dateExistStatusThId === 2 || this.dateExistStatusThId === 3 || this.dateExistStatusThId === 4 || this.dateExistStatusThId === 5 || this.dateExistStatusThId === 6 || this.dateExistStatusThId === 7 || this.dateExistStatusThId === 9 || this.dateExistStatusThId === 9 || this.dateExistStatusThId === 10 || this.dateExistStatusThId === 11 ) {
       Swal.fire({
-        html: '<span style="font-size: 18px;">Tidak boleh disimpan kerana tugasan harian pada hari ini telah dihantar</span>',
+        html: '<span style="font-size: 18px;">Tidak boleh dihantar kerana tugasan harian pada hari ini telah dihantar</span>',
         icon: 'error',
         showConfirmButton: false,
         timer: 2500,

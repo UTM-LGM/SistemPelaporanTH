@@ -20,9 +20,9 @@ export class KelulusanTHComponent implements OnInit {
   laporanMain: tugasHarian_Main[] = [];
   mainTugasan: tugasHarian_Main = {} as tugasHarian_Main;
   filteredLaporanMain: tugasHarian_Main[] = [];
-  units: unit[] = [];
   employees: employees[] = [];
   selectedUnitId: string;
+  duplicateUnitIds: employees[] = [];
   selectedEmpId: number;
   selectedTarikh: Date;
 
@@ -33,9 +33,6 @@ export class KelulusanTHComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.laporanTugas.getSenaraiUnit().subscribe(unit => {
-      this.units = unit;
-    });
     this.authService.currentEmail.subscribe(email => {
       this.currentUser.empEmailLogin = email;
       if (this.currentUser.empEmailLogin) {
@@ -43,6 +40,8 @@ export class KelulusanTHComponent implements OnInit {
           this.currentUser = res;
           this.laporanTugas.getSenaraiKakitangan(this.currentUser.empId).subscribe(staff => {
             this.employees = staff;
+            this.duplicateUnitIds = this.removeDuplicates(staff)
+            console.log(this.duplicateUnitIds, "dup")
           })
           this.laporanTugas.getSenaraiKelulusan(this.currentUser.empId).subscribe(lulus => {
             this.laporanMain = lulus;
@@ -54,6 +53,7 @@ export class KelulusanTHComponent implements OnInit {
   }
 
   filterLaporanByUnit() {
+    console.log(this.selectedUnitId)
     if (this.selectedUnitId) {
       this.filteredLaporanMain = this.laporanMain.filter(item => item.unitId === this.selectedUnitId);
     } else {
@@ -89,6 +89,16 @@ export class KelulusanTHComponent implements OnInit {
       this.filteredLaporanMain = this.laporanMain;
     }
   }
+
+  removeDuplicates(data: employees[]): employees[] {
+    const seen = new Set();
+    return data.filter(item => {
+      const duplicate = seen.has(item.unitId);
+      seen.add(item.unitId);
+      return !duplicate;
+    });
+  }
+
 
   tolak() {
   }

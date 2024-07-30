@@ -1,3 +1,4 @@
+<div style="background-image: url('assets/image/db-bg.jpg'); width: 100%; height: 100%;">
 <div class="main-content">
     <mat-card style="padding: 50px;">
         <mat-card class="grad">
@@ -5,9 +6,42 @@
         </mat-card>
         <br>
         <div>
-            <mat-card>
-                TEST
+            <mat-card *ngIf="dateExistResult" >
+                <div >
+                    Terdapat tugasan harian yang masih belum di hantar. Sila hantar tugasan harian anda terlebih dahulu. <a href="/PelaporanTugasHarian/senaraiDeraf" class="animated-link">Tekan disini</a>
+                    <!-- LOCAL
+                    Terdapat tugasan harian yang masih belum di hantar. Sila hantar tugasan harian anda terlebih dahulu. <a href="/senaraiDeraf" class="animated-link">Tekan disini</a> -->
+                  </div>
+            </mat-card>
+        </div>
+        <br>
+        <div>
+            <mat-card class="welcome-card">
+                <div>
+                    <h5>Selamat Datang</h5>
+                    Anda telah log masuk sebagai :
+    
+                    <table class="user-info-table">
+                        <tr>
+                            <td class="info-label">Nama:</td>
+                            <td class="info-value">{{this.currentUser.empName}}</td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">No Kad Pengenalan:</td>
+                            <td class="info-value">{{this.currentUser.empIcNo}}</td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Unit:</td>
+                            <td class="info-value">{{this.currentUser.unitName}}</td>
+                        </tr>
+                        <tr>
+                            <td class="info-label">Pelulus:</td>
+                            <td class="info-value">{{this.currentUser.pelulusThName}}</td>
+                        </tr>
+                    </table>
+                </div>
             </mat-card>
         </div>
     </mat-card>
+</div>
 </div>

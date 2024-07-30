@@ -49,9 +49,11 @@ registerLocaleData(localeMs, 'ms');
     MsalModule.forRoot( 
       new PublicClientApplication({ 
         auth: { 
-          clientId: "2c5e5f1f-1ede-413f-a396-a2f7e103de3c",
+          //clientId: "2c5e5f1f-1ede-413f-a396-a2f7e103de3c",//PRODUCTION
+          clientId: "0dfc7581-14e8-4e01-bdb7-da82b5027f7f", //LOCAL
           authority:  "https://login.microsoftonline.com/22f0712b-5def-4d21-a16e-30e5e334541e",
           redirectUri: "http://localhost:4200/login", 
+          //redirectUri: 'https://www5.lgm.gov.my/PelaporanTugasHarian/login'
         }, 
         cache: {
           cacheLocation: BrowserCacheLocation.LocalStorage, 

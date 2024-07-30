@@ -5,10 +5,11 @@ import { MsalGuard } from '@azure/msal-angular';
 import { AuthGuardService } from './auth/auth-guard.service';
 import { LoginComponent } from './login/login.component';
 import { BrowserUtils } from '@azure/msal-browser';
+import { LamanUtamaComponent } from './tugas-harian/laman-utama/laman-utama.component';
 
 
 const routes: Routes = [
-  { path: 'sistemPelaporanTH', component:TambahTugasHarianComponent, canActivate:[MsalGuard,AuthGuardService] } ,
+  { path: 'sistemPelaporanTH', component:LamanUtamaComponent, canActivate:[MsalGuard,AuthGuardService] } ,
   { path: '', redirectTo: 'sistemPelaporanTH', pathMatch: 'full'},
   { path: 'login', component: LoginComponent },
 ];

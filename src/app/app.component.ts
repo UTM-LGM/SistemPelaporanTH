@@ -56,6 +56,7 @@ export class AppComponent {
   logOut() {
     this.msalService.logoutRedirect({
       postLogoutRedirectUri: 'http://localhost:4200/login'
+      //postLogoutRedirectUri: 'https://www5.lgm.gov.my/PelaporanTugasHarian/login'
     });
     localStorage.clear();
   }

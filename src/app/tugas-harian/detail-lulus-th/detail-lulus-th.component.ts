@@ -90,7 +90,7 @@ export class DetailLulusThComponent implements OnInit {
     this.laporanTugas.kelulusanTolak(this.thMainId, this.mainTugasan.Remarks).subscribe(
       response => {
         Swal.fire({
-          html: '<span style="font-size: 18px;">Status tugasan harian berjaya dikemaskini.</span>',
+          html: '<span style="font-size: 18px;">Tugas harian telah disemak</span>',
           icon: 'success',
           showConfirmButton: false,
           timer: 2500,
@@ -99,7 +99,7 @@ export class DetailLulusThComponent implements OnInit {
       },
       error => {
         Swal.fire({
-          html: '<span style="font-size: 18px;">Ralat berlaku semasa mengemaskini status.</span>',
+          html: '<span style="font-size: 18px;">Ralat berlaku semasa menyemak tugas harian.</span>',
           icon: 'error',
           showConfirmButton: false,
           timer: 2500,
@@ -112,7 +112,7 @@ export class DetailLulusThComponent implements OnInit {
     this.laporanTugas.kelulusanLulus(this.thMainId).subscribe(
       response => {
         Swal.fire({
-          html: '<span style="font-size: 18px;">Status tugasan harian berjaya dikemaskini.</span>',
+          html: '<span style="font-size: 18px;">Tugas harian telah disemak</span>',
           icon: 'success',
           showConfirmButton: false,
           timer: 2500,
@@ -121,7 +121,7 @@ export class DetailLulusThComponent implements OnInit {
       },
       error => {
         Swal.fire({
-          html: '<span style="font-size: 18px;">Ralat berlaku semasa mengemaskini status.</span>',
+          html: '<span style="font-size: 18px;">Ralat berlaku semasa menyemak tugas harian.</span>',
           icon: 'error',
           showConfirmButton: false,
           timer: 2500,

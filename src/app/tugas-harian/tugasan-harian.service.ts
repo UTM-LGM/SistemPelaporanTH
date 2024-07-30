@@ -112,5 +112,9 @@ export class TugasanHarianService {
     return this.httpClient.get<tugasHarian_Main[]>(this.baseUrl + '/TugasHarianMains/GetSenaraiLaporanIndividu/' + empId);
   }
 
+  getSenaraiLaporanKeseluruhan(empId): Observable<tugasHarian_Main[]> {
+    return this.httpClient.get<tugasHarian_Main[]>(this.baseUrl + '/TugasHarianMains/GetSenaraiLaporanIndividu/' + empId);
+  }
+
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

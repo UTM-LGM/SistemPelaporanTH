@@ -22,6 +22,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { LamanUtamaComponent } from './laman-utama/laman-utama.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { SenaraiLaporanKeseluruhanComponent } from './senarai-laporan-keseluruhan/senarai-laporan-keseluruhan.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     KelulusanTHComponent,
     DetailLulusThComponent,
     DetailLaporanIndividuComponent,
-    LamanUtamaComponent
+    LamanUtamaComponent,
+    SenaraiLaporanKeseluruhanComponent
   ],
   imports: [
     CommonModule,
@@ -51,6 +54,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     ReactiveFormsModule,
     MatGridListModule,
     MatToolbarModule,
+    BrowserAnimationsModule,
+    NoopAnimationsModule
   ]
 })
 export class TugasanHarianModule { }

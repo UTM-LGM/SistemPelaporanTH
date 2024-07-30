@@ -17,8 +17,10 @@ export class employees {
     idPelulus: number = 0;
     idKeraniCuti: number = 0;
     idPelulusTh: number = 0;
+    pelulusThName: string = "";
     wp: number = 0;
     unitId: string = "";
+    unitName: string = "";
     newOpsyen: boolean = false;
     pensionDate: Date  = new Date();
     status: boolean = false;

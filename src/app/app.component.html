@@ -12,14 +12,14 @@
                     </span>
                 </a>
             </li>
-            <li>
+            <!-- <li>
                 <a routerLink="profil">
                     <i class="fa fa-user fa-2x"></i>
                     <span class="nav-text">
                         Profil
                     </span>
                 </a>
-            </li>
+            </li> -->
             <li class="has-subnav">
                 <a routerLink="/tambahTugasanHarian">
                     <i class="fa fa-plus-circle fa-2x"></i>
@@ -47,6 +47,14 @@
             <li class="has-subnav">
                 <a routerLink="/senaraiLaporanIndividu">
                     <i class="fa fa-folder-open fa-2x"></i>
+                    <span class="nav-text">
+                        Laporan Individu
+                    </span>
+                </a>
+            </li>
+            <li *ngIf="this.employees.length > 0" class="has-subnav">
+                <a routerLink="/senaraiLaporanKeseluruhan">
+                    <i class="fa fa-folder fa-2x"></i>
                     <span class="nav-text">
                         Senarai Laporan
                     </span>

@@ -136,8 +136,8 @@ export class KemaskiniTHComponent implements OnInit {
           icon: 'success',
           showConfirmButton: false,
           timer: 2500,
-
         });
+        this.router.navigate(['/senaraiDeraf']);
       },
       error => {
         Swal.fire({
@@ -146,6 +146,7 @@ export class KemaskiniTHComponent implements OnInit {
           showConfirmButton: false,
           timer: 2500,
         });
+        this.router.navigate(['/senaraiDeraf']);
       }
     );
   }

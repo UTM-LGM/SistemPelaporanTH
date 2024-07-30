@@ -34,8 +34,8 @@ export class AuthGuardService {
 
   setAccessToken() {
     // Entra Id
-    //const clientId = 'c1a6f726-8fe6-4b3d-a885-c49669e5ebbc'; // PRODUCTION
-    const clientId = '2c5e5f1f-1ede-413f-a396-a2f7e103de3c'; // LOCAL
+    //const clientId = '2c5e5f1f-1ede-413f-a396-a2f7e103de3c'; //PRODUCTION
+    const clientId = '0dfc7581-14e8-4e01-bdb7-da82b5027f7f'; //LOCAL
  
     const tokenInfoString = localStorage.getItem(`msal.token.keys.${clientId}`);
     //console.log("tokeninfo", tokenInfoString)
@@ -84,6 +84,7 @@ export class AuthGuardService {
       if (decodedToken.exp * 1000 < currentTime) {
         this.msalService.logoutRedirect({
            postLogoutRedirectUri: 'http://localhost:4200/login'
+           //postLogoutRedirectUri: 'https://www5.lgm.gov.my/PelaporanTugasHarian/login'
         });
         localStorage.clear()
         this.router.navigateByUrl('/login')

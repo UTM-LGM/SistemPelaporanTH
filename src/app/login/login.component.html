@@ -1,10 +1,10 @@
 
-<div class="login-container">
+<div class="login-container" style="background-image: url('assets/image/bglog.jpg'); background-repeat: no-repeat; background-attachment: fixed; background-size: 105% 129%; background-position: center;">
     <div class="login-content" *ngIf="!isLoading">
       <!-- <div class="login-content"> -->
       <img src="assets/image/lgm-logo.png" alt="Logo" class="logo">
       <h3 class="title">Sistem Pelaporan Tugas Harian</h3>
-      <button (click)="loginSSO()" class="login-button">Log In</button>
+      <button (click)="loginSSO()" class="login-button">Log Masuk</button>
     </div>
     <div class="loading-spinner" *ngIf="isLoading">
       <div class="spinner"></div>
