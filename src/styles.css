@@ -1,5 +1,5 @@
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background-color: rgb(163, 163, 163);}
+body { margin: 0; background-color: rgb(163, 163, 163);}
 /* background-image:url('assets/image/db-bg.jpg') */
 body::before {
   content: "";

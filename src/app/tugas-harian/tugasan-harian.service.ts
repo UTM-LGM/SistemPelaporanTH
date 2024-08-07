@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { tugasHarian_Main } from '../models/tugasHarian_Main.model';
 import { tugasHarian_Detail } from '../models/tugasHarian_Detail.model';
 import { unit } from '../models/unit.model';
+import { ref_StatusTH } from '../models/ref_StatusTH.model';
 
 @Injectable({
   providedIn: 'root'
@@ -112,8 +113,16 @@ export class TugasanHarianService {
     return this.httpClient.get<tugasHarian_Main[]>(this.baseUrl + '/TugasHarianMains/GetSenaraiLaporanIndividu/' + empId);
   }
 
+  getStatus() {
+    return this.httpClient.get<ref_StatusTH[]>(this.baseUrl + '/RefStatusThs/GetStatus');
+  }
+
+  getSenaraiLaporanIndividuAll(empId): Observable<tugasHarian_Main[]> {
+    return this.httpClient.get<tugasHarian_Main[]>(this.baseUrl + '/TugasHarianMains/GetSenaraiLaporanIndividu2/' + empId);
+  }
+
   getSenaraiLaporanKeseluruhan(empId): Observable<tugasHarian_Main[]> {
-    return this.httpClient.get<tugasHarian_Main[]>(this.baseUrl + '/TugasHarianMains/GetSenaraiLaporanIndividu/' + empId);
+    return this.httpClient.get<tugasHarian_Main[]>(this.baseUrl + '/TugasHarianMains/GetSenaraiLaporanAll/' + empId);
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

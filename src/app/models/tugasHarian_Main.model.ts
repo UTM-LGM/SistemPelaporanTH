@@ -4,6 +4,8 @@ export class tugasHarian_Main{
     id: number;
     Tarikh: Date;
     tarikh: string | Date;
+    month:string;
+    year:string;
     EmpId: number;
     empid: number;
     emp_name: string;

@@ -41,7 +41,6 @@ export class KelulusanTHComponent implements OnInit {
           this.laporanTugas.getSenaraiKakitangan(this.currentUser.empId).subscribe(staff => {
             this.employees = staff;
             this.duplicateUnitIds = this.removeDuplicates(staff)
-            console.log(this.duplicateUnitIds, "dup")
           })
           this.laporanTugas.getSenaraiKelulusan(this.currentUser.empId).subscribe(lulus => {
             this.laporanMain = lulus;
@@ -53,7 +52,6 @@ export class KelulusanTHComponent implements OnInit {
   }
 
   filterLaporanByUnit() {
-    console.log(this.selectedUnitId)
     if (this.selectedUnitId) {
       this.filteredLaporanMain = this.laporanMain.filter(item => item.unitId === this.selectedUnitId);
     } else {

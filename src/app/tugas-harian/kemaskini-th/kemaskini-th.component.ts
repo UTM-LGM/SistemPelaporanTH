@@ -27,6 +27,21 @@ export class KemaskiniTHComponent implements OnInit {
   masaMulaOptions: string[] = [];
   thMainId: number;
 
+  config = {
+    placeholder: '',
+    tabsize: 2,
+    height: '200px',
+    uploadImagePath: '/api/upload',
+    toolbar: [
+        ['misc', ['undo', 'redo']],
+        ['font', ['bold', 'italic', 'underline']],
+        ['fontsize', ['fontname', 'fontsize', 'color']],
+        ['para', ['ul', 'ol', 'paragraph', 'height']],
+        ['insert', ['table']]
+    ],
+    fontNames: ['Arial']
+  }
+
   constructor(
     private laporanTugas: TugasanHarianService,
     private datePipe: DatePipe,

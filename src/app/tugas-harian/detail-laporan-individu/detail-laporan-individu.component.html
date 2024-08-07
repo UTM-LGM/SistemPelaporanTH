@@ -14,7 +14,7 @@
             </tr>
             <tr *ngFor="let item of tugasan; let i=index">
                 <td style="text-align: center;"><input class="transparentInput" name="bil">{{i + 1}}</td>
-                <td>
+                <td [innerHTML]="tugasan[i].tugasanHarian">
                     <div class="displayText">{{item.tugasanHarian}}</div>
                 </td>
                 <td>

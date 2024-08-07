@@ -30,7 +30,6 @@ export class SenaraiLaporanKeseluruhanComponent implements OnInit {
           this.currentUser = res;
           this.laporanTugas.getSenaraiKakitangan(this.currentUser.empId).subscribe(staff => {
             this.employees = staff;
-            console.log(staff)
           })
         });
       }
@@ -41,7 +40,6 @@ export class SenaraiLaporanKeseluruhanComponent implements OnInit {
     if (this.selectedEmpId) {
       this.laporanTugas.getSenaraiLaporanKeseluruhan(this.selectedEmpId).subscribe(li => {
         this.filteredLaporanMain = li;
-        console.log(li)
       })
     }
   }

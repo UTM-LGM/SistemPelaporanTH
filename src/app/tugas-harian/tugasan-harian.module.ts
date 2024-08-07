@@ -24,6 +24,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SenaraiLaporanKeseluruhanComponent } from './senarai-laporan-keseluruhan/senarai-laporan-keseluruhan.component';
+import { NgxSummernoteModule } from 'ngx-summernote';
+import { SafeHtmlPipe } from './safe-html.pipe';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { SenaraiLaporanKeseluruhanComponent } from './senarai-laporan-keseluruha
     DetailLulusThComponent,
     DetailLaporanIndividuComponent,
     LamanUtamaComponent,
-    SenaraiLaporanKeseluruhanComponent
+    SenaraiLaporanKeseluruhanComponent,
+    SafeHtmlPipe
   ],
   imports: [
     CommonModule,
@@ -55,7 +58,11 @@ import { SenaraiLaporanKeseluruhanComponent } from './senarai-laporan-keseluruha
     MatGridListModule,
     MatToolbarModule,
     BrowserAnimationsModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+    NgxSummernoteModule
+  ],
+  exports:[
+    SafeHtmlPipe
   ]
 })
 export class TugasanHarianModule { }

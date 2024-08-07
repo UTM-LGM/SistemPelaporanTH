@@ -19,6 +19,7 @@ import { MsalGuard, MsalInterceptor, MsalModule, MsalRedirectComponent } from '@
 import { BrowserCacheLocation, InteractionType, PublicClientApplication } from '@azure/msal-browser';
 import { LoginComponent } from './login/login.component';
 import { TokenInterceptor } from './interceptor/token.interceptor';
+import { SafeHtmlPipe } from './tugas-harian/safe-html.pipe';
 
 const isIE =
   window.navigator.userAgent.indexOf("MSIE ") > -1 ||
@@ -35,7 +36,7 @@ registerLocaleData(localeMs, 'ms');
     ExistDataComponent,
     ExistDataHantarComponent,
     ExistDrafComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

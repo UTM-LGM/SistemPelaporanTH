@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, SecurityContext, ViewChild } from '@angular/core';
 import { tugasHarian_Detail } from 'src/app/models/tugasHarian_Detail.model';
 import { TugasanHarianService } from '../tugasan-harian.service';
 import { employees } from 'src/app/models/employees.model';
@@ -13,6 +13,7 @@ import { ExistDataHantarComponent } from 'src/app/dialogbox/exist-data-hantar/ex
 import { ExistDrafComponent } from 'src/app/dialogbox/exist-draf/exist-draf.component';
 import { AuthServiceService } from 'src/app/auth/auth-service.service';
 import { userDTO } from 'src/app/models/userDTO.model';
+import { DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tambah-tugas-harian',
@@ -23,9 +24,20 @@ export class TambahTugasHarianComponent implements OnInit {
 
   @ViewChild('sweetAlertContainer', { static: false }) sweetAlertContainer!: ElementRef;
 
-  default: any = {
-    airMode: true
-  };
+  config = {
+    placeholder: '',
+    tabsize: 2,
+    height: '200px',
+    uploadImagePath: '/api/upload',
+    toolbar: [
+        ['misc', ['undo', 'redo']],
+        ['font', ['bold', 'italic', 'underline']],
+        ['fontsize', ['fontname', 'fontsize', 'color']],
+        ['para', ['ul', 'ol', 'paragraph', 'height']],
+        ['insert', ['table']]
+    ],
+    fontNames: ['Arial']
+  }
 
   user: userDTO = {} as userDTO;
   currentUser: employees = {} as employees;
@@ -45,7 +57,8 @@ export class TambahTugasHarianComponent implements OnInit {
     private datePipe: DatePipe,
     public dialog: MatDialog,
     private router: Router,
-    private authService: AuthServiceService
+    private authService: AuthServiceService,
+    public sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -78,7 +91,6 @@ export class TambahTugasHarianComponent implements OnInit {
               });
               this.isDisabled = true;
             }
-            //console.log("not send", not)
           })
         });
       }
@@ -177,14 +189,31 @@ export class TambahTugasHarianComponent implements OnInit {
     this.laporanTugas.simpanDeraf(this.mainTugasan).subscribe(mainResult => {
       this.mainTugasan = mainResult;
 
+      // if (this.mainTugasan.id) {
+      //   let detailRequests = this.tugasan.map(tugas => ({
+      //     id: tugas.id,
+      //     thMainId: this.mainTugasan.id,
+      //     masaMula: tugas.masaMula,
+      //     masaTamat: tugas.masaTamat,
+      //     // tugasanHarian: tugas.tugasanHarian
+      //     tugasanHarian: this.sanitizer.sanitize(SecurityContext.HTML, tugas.tugasanHarian) || ''
+      //   }));
+      //   console.log(detailRequests)
+
       if (this.mainTugasan.id) {
-        let detailRequests = this.tugasan.map(tugas => ({
-          id: tugas.id,
-          thMainId: this.mainTugasan.id,
-          masaMula: tugas.masaMula,
-          masaTamat: tugas.masaTamat,
-          tugasanHarian: tugas.tugasanHarian
-        }));
+        let detailRequests = this.tugasan.map(tugas => {
+          const sanitizedTugasanHarian = this.sanitizer.sanitize(SecurityContext.HTML, tugas.tugasanHarian) || '';
+
+          // console.log('Sanitized tugasHarian:', sanitizedTugasanHarian);
+          return {
+            id: tugas.id,
+            thMainId: this.mainTugasan.id,
+            masaMula: tugas.masaMula,
+            masaTamat: tugas.masaTamat,
+            tugasanHarian: sanitizedTugasanHarian
+          };
+        });
+        console.log('Detail Requests:', detailRequests);
 
         this.laporanTugas.simpanDerafDetail(detailRequests).subscribe(detailResult => {
           Swal.fire({
@@ -259,14 +288,27 @@ export class TambahTugasHarianComponent implements OnInit {
     this.laporanTugas.hantarTugasan(this.mainTugasan).subscribe(mainResult => {
       this.mainTugasan = mainResult;
 
-      if (this.mainTugasan.id) {
-        let detailRequests = this.tugasan.map(tugas => ({
-          id: tugas.id,
-          thMainId: this.mainTugasan.id,
-          masaMula: tugas.masaMula,
-          masaTamat: tugas.masaTamat,
-          tugasanHarian: tugas.tugasanHarian
-        }));
+      // if (this.mainTugasan.id) {
+      //   let detailRequests = this.tugasan.map(tugas => ({
+      //     id: tugas.id,
+      //     thMainId: this.mainTugasan.id,
+      //     masaMula: tugas.masaMula,
+      //     masaTamat: tugas.masaTamat,
+      //     tugasanHarian: tugas.tugasanHarian
+      //   }));
+      
+        if (this.mainTugasan.id) {
+          let detailRequests = this.tugasan.map(tugas => {
+            const sanitizedTugasanHarian = this.sanitizer.sanitize(SecurityContext.HTML, tugas.tugasanHarian) || '';
+            // console.log('Sanitized tugasHarian:', sanitizedTugasanHarian);
+            return {
+              id: tugas.id,
+              thMainId: this.mainTugasan.id,
+              masaMula: tugas.masaMula,
+              masaTamat: tugas.masaTamat,
+              tugasanHarian: sanitizedTugasanHarian
+            };
+          });
 
         this.laporanTugas.simpanDerafDetail(detailRequests).subscribe(detailResult => {
           Swal.fire({
@@ -290,5 +332,38 @@ export class TambahTugasHarianComponent implements OnInit {
     });
 
   }
+
+  // tugas.tugasanHarian = this.transformToPlainText(sanitizedHtml);
+  // transformToPlainText(html: string): string {
+  //   // Create a temporary DOM element to parse the HTML content
+  //   let tempElement = document.createElement('div');
+  //   tempElement.innerHTML = html;
+  
+  //   // Function to recursively parse HTML elements and extract text content
+  //   function parseElement(element) {
+  //     let text = '';
+  //     element.childNodes.forEach(child => {
+  //       if (child.nodeType === Node.TEXT_NODE) {
+  //         text += child.textContent;
+  //       } else if (child.nodeType === Node.ELEMENT_NODE) {
+  //         if (child.tagName === 'UL') {
+  //           text += '\n';
+  //         } else if (child.tagName === 'LI') {
+  //           text += '\n. ';
+  //         }
+  //         text += parseElement(child);
+  //       }
+  //     });
+  //     return text;
+  //   }
+  
+  //   // Get the plain text content from the parsed HTML
+  //   let plainText = parseElement(tempElement);
+    
+  //   // Trim any extra spaces or new lines
+  //   plainText = plainText.trim();
+  
+  //   return plainText;
+  // }
 
 }
