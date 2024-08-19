@@ -1,0 +1,37 @@
+<div style="background-image: url('assets/image/db-bg.jpg'); width: 100%; height: 100%;">
+    <div class="main-content">
+        <mat-card style="padding: 50px;">
+            <mat-card class="grad">
+                <h5>Laporan Tugas Harian</h5>
+            </mat-card>
+            <br>
+            <mat-form-field style="margin-left: 10px;">
+                <mat-label>Tarikh</mat-label>
+                <input matInput [matDatepicker]="tarikhPicker" name="selectedDate" [(ngModel)]="selectedTarikh"
+                    (ngModelChange)="filterByTarikh()">
+                <mat-datepicker-toggle matSuffix [for]="tarikhPicker"></mat-datepicker-toggle>
+                <mat-datepicker #tarikhPicker></mat-datepicker>
+            </mat-form-field>
+            <br>
+            <table>
+                <tr >
+                    <th style="width: 10%;">BIL.</th>
+                    <th>TARIKH</th>
+                    <th>NAMA</th>
+                    <th>STATUS</th>
+                    <!-- <th colspan="2">KELULUSAN</th> -->
+                </tr>
+                <tr *ngFor="let emp of employees; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td><a routerLink="/laporanTHIndividu/{{emp.tugasHarianMain?.id}}">{{ emp.tugasHarianMain?.tarikh
+                            }}</a></td>
+                    <td>{{ emp.empName || '-' }}</td>
+                    <td>{{ emp.tugasHarianMain?.statusThName || 'TiadaTH' }}</td>
+                </tr>
+            </table>
+            <ng-template #noData>
+                <div class="no-data-message">Tiada rekod harian</div>
+            </ng-template>
+        </mat-card>
+    </div>
+</div>

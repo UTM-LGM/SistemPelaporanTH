@@ -9,6 +9,7 @@ import { DetailLulusThComponent } from './detail-lulus-th/detail-lulus-th.compon
 import { DetailLaporanIndividuComponent } from './detail-laporan-individu/detail-laporan-individu.component';
 import { LamanUtamaComponent } from './laman-utama/laman-utama.component';
 import { SenaraiLaporanKeseluruhanComponent } from './senarai-laporan-keseluruhan/senarai-laporan-keseluruhan.component';
+import { LaporanSemakSemasaComponent } from './laporan-semak-semasa/laporan-semak-semasa.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'kelulusanTugasHarian', component: KelulusanTHComponent },
   { path: 'lamanUtama', component: LamanUtamaComponent },
   { path: 'senaraiLaporanKeseluruhan', component: SenaraiLaporanKeseluruhanComponent },
+  { path: 'senaraiLaporanSemak', component: LaporanSemakSemasaComponent },
 ];
 
 @NgModule({

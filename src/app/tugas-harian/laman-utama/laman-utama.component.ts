@@ -14,6 +14,7 @@ export class LamanUtamaComponent implements OnInit {
   currentUser: employees = {} as employees;
   dateExistResult: any = null;
   flashState: string = 'flashOn';
+  isLoading: boolean = false;
 
   constructor(
     private authService: AuthServiceService,
@@ -21,6 +22,7 @@ export class LamanUtamaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.authService.currentEmail.subscribe(email => {
       this.currentUser.empEmailLogin = email;
       if (this.currentUser.empEmailLogin) {
@@ -28,10 +30,17 @@ export class LamanUtamaComponent implements OnInit {
           this.currentUser = res;
           this.laporanTugas.checkBeforeFilled(this.currentUser.empId).subscribe(dateExistResult => {
             this.dateExistResult = dateExistResult;
-          });
+            this.isLoading = false; // Stop the spinner after data is loaded
+        }, error => {
+          this.isLoading = false; // Stop the spinner in case of an error
         });
-      }
-    })
-  }
+      }, error => {
+        this.isLoading = false; // Stop the spinner in case of an error
+      });
+    } else {
+      this.isLoading = false; // Stop the spinner if there's no email
+    }
+  });
+}
 
 }

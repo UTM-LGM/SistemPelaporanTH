@@ -1,3 +1,5 @@
+import { tugasHarian_Main } from "./tugasHarian_Main.model";
+
 export class employees {
     empId: number = 0;
     empFileno: string = "";
@@ -24,4 +26,6 @@ export class employees {
     newOpsyen: boolean = false;
     pensionDate: Date  = new Date();
     status: boolean = false;
+    tarikh: string | Date;
+    tugasHarianMain?: tugasHarian_Main;
 }

@@ -13,7 +13,7 @@ import { ExistDataHantarComponent } from 'src/app/dialogbox/exist-data-hantar/ex
 import { ExistDrafComponent } from 'src/app/dialogbox/exist-draf/exist-draf.component';
 import { AuthServiceService } from 'src/app/auth/auth-service.service';
 import { userDTO } from 'src/app/models/userDTO.model';
-import { DomSanitizer} from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tambah-tugas-harian',
@@ -30,11 +30,11 @@ export class TambahTugasHarianComponent implements OnInit {
     height: '200px',
     uploadImagePath: '/api/upload',
     toolbar: [
-        ['misc', ['undo', 'redo']],
-        ['font', ['bold', 'italic', 'underline']],
-        ['fontsize', ['fontname', 'fontsize', 'color']],
-        ['para', ['ul', 'ol', 'paragraph', 'height']],
-        ['insert', ['table']]
+      ['misc', ['undo', 'redo']],
+      ['font', ['bold', 'italic', 'underline']],
+      ['fontsize', ['fontname', 'fontsize', 'color']],
+      ['para', ['ul', 'ol', 'paragraph', 'height']],
+      ['insert', ['table']]
     ],
     fontNames: ['Arial']
   }
@@ -98,23 +98,35 @@ export class TambahTugasHarianComponent implements OnInit {
   }
 
   generateTimeOptions() {
-    let time = new Date();
-    time.setHours(7, 30, 0); // Start at 07:30
-
-    while (time.getHours() < 18 || (time.getHours() === 18 && time.getMinutes() === 0)) {
-      this.timeOptions.push(this.formatTime(time));
-      time.setMinutes(time.getMinutes() + 30);
+    this.timeOptions = [];
+  
+    for (let hour = 0; hour < 24; hour++) {
+      this.timeOptions.push(this.formatTime(hour, 0));
+      
+      this.timeOptions.push(this.formatTime(hour, 30));
     }
   }
+  
+  formatTime(hour, minute) {
 
-  formatTime(time: Date): string {
-    return ('0' + time.getHours()).slice(-2) + ':' + ('0' + time.getMinutes()).slice(-2);
+    const formattedHour = hour.toString().padStart(2, '0');
+    const formattedMinute = minute.toString().padStart(2, '0');
+    
+    return `${formattedHour}:${formattedMinute}`;
   }
 
   getFilteredMasaTamat(masaMula: string): string[] {
     const startIndex = this.timeOptions.indexOf(masaMula);
-    return this.timeOptions.slice(startIndex + 1);
+    let filteredOptions = this.timeOptions.slice(startIndex + 1);
+  
+    if (masaMula <= '23:30') {
+      filteredOptions.push('23:59');
+    }
+  
+    return filteredOptions;
   }
+  
+  
 
   tambah() {
     this.tugasan.push({ id: 0, thMainId: 0, masaMula: "", masaTamat: "", tugasanHarian: "" })
@@ -151,7 +163,7 @@ export class TambahTugasHarianComponent implements OnInit {
       this.router.navigate(['/senaraiDeraf']);
       return;
     }
-    else if (this.dateExistStatusThId === 2 || this.dateExistStatusThId === 3 || this.dateExistStatusThId === 4 || this.dateExistStatusThId === 5 || this.dateExistStatusThId === 6 || this.dateExistStatusThId === 7 || this.dateExistStatusThId === 9 || this.dateExistStatusThId === 9 || this.dateExistStatusThId === 10 || this.dateExistStatusThId === 11 ) {
+    else if (this.dateExistStatusThId === 2 || this.dateExistStatusThId === 3 || this.dateExistStatusThId === 4 || this.dateExistStatusThId === 5 || this.dateExistStatusThId === 6 || this.dateExistStatusThId === 7 || this.dateExistStatusThId === 9 || this.dateExistStatusThId === 9 || this.dateExistStatusThId === 10 || this.dateExistStatusThId === 11) {
       Swal.fire({
         html: '<span style="font-size: 18px;">Tidak boleh disimpan kerana tugasan harian pada hari ini telah dihantar</span>',
         icon: 'error',
@@ -189,22 +201,10 @@ export class TambahTugasHarianComponent implements OnInit {
     this.laporanTugas.simpanDeraf(this.mainTugasan).subscribe(mainResult => {
       this.mainTugasan = mainResult;
 
-      // if (this.mainTugasan.id) {
-      //   let detailRequests = this.tugasan.map(tugas => ({
-      //     id: tugas.id,
-      //     thMainId: this.mainTugasan.id,
-      //     masaMula: tugas.masaMula,
-      //     masaTamat: tugas.masaTamat,
-      //     // tugasanHarian: tugas.tugasanHarian
-      //     tugasanHarian: this.sanitizer.sanitize(SecurityContext.HTML, tugas.tugasanHarian) || ''
-      //   }));
-      //   console.log(detailRequests)
-
       if (this.mainTugasan.id) {
         let detailRequests = this.tugasan.map(tugas => {
           const sanitizedTugasanHarian = this.sanitizer.sanitize(SecurityContext.HTML, tugas.tugasanHarian) || '';
 
-          // console.log('Sanitized tugasHarian:', sanitizedTugasanHarian);
           return {
             id: tugas.id,
             thMainId: this.mainTugasan.id,
@@ -213,11 +213,10 @@ export class TambahTugasHarianComponent implements OnInit {
             tugasanHarian: sanitizedTugasanHarian
           };
         });
-        console.log('Detail Requests:', detailRequests);
 
         this.laporanTugas.simpanDerafDetail(detailRequests).subscribe(detailResult => {
           Swal.fire({
-            title: 'Deraf',
+            title: 'Draf',
             imageUrl: 'assets/image/draf.png',  // Replace with the path to your custom icon
             imageWidth: 100,  // Adjust the width as needed
             imageHeight: 100,  // Adjust the height as needed
@@ -250,7 +249,7 @@ export class TambahTugasHarianComponent implements OnInit {
       this.router.navigate(['/senaraiDeraf']);
       return;
     }
-    else if (this.dateExistStatusThId === 2 || this.dateExistStatusThId === 3 || this.dateExistStatusThId === 4 || this.dateExistStatusThId === 5 || this.dateExistStatusThId === 6 || this.dateExistStatusThId === 7 || this.dateExistStatusThId === 9 || this.dateExistStatusThId === 9 || this.dateExistStatusThId === 10 || this.dateExistStatusThId === 11 ) {
+    else if (this.dateExistStatusThId === 2 || this.dateExistStatusThId === 3 || this.dateExistStatusThId === 4 || this.dateExistStatusThId === 5 || this.dateExistStatusThId === 6 || this.dateExistStatusThId === 7 || this.dateExistStatusThId === 9 || this.dateExistStatusThId === 9 || this.dateExistStatusThId === 10 || this.dateExistStatusThId === 11) {
       Swal.fire({
         html: '<span style="font-size: 18px;">Tidak boleh dihantar kerana tugasan harian pada hari ini telah dihantar</span>',
         icon: 'error',
@@ -288,27 +287,17 @@ export class TambahTugasHarianComponent implements OnInit {
     this.laporanTugas.hantarTugasan(this.mainTugasan).subscribe(mainResult => {
       this.mainTugasan = mainResult;
 
-      // if (this.mainTugasan.id) {
-      //   let detailRequests = this.tugasan.map(tugas => ({
-      //     id: tugas.id,
-      //     thMainId: this.mainTugasan.id,
-      //     masaMula: tugas.masaMula,
-      //     masaTamat: tugas.masaTamat,
-      //     tugasanHarian: tugas.tugasanHarian
-      //   }));
-      
-        if (this.mainTugasan.id) {
-          let detailRequests = this.tugasan.map(tugas => {
-            const sanitizedTugasanHarian = this.sanitizer.sanitize(SecurityContext.HTML, tugas.tugasanHarian) || '';
-            // console.log('Sanitized tugasHarian:', sanitizedTugasanHarian);
-            return {
-              id: tugas.id,
-              thMainId: this.mainTugasan.id,
-              masaMula: tugas.masaMula,
-              masaTamat: tugas.masaTamat,
-              tugasanHarian: sanitizedTugasanHarian
-            };
-          });
+      if (this.mainTugasan.id) {
+        let detailRequests = this.tugasan.map(tugas => {
+          const sanitizedTugasanHarian = this.sanitizer.sanitize(SecurityContext.HTML, tugas.tugasanHarian) || '';
+          return {
+            id: tugas.id,
+            thMainId: this.mainTugasan.id,
+            masaMula: tugas.masaMula,
+            masaTamat: tugas.masaTamat,
+            tugasanHarian: sanitizedTugasanHarian
+          };
+        });
 
         this.laporanTugas.simpanDerafDetail(detailRequests).subscribe(detailResult => {
           Swal.fire({
@@ -332,38 +321,5 @@ export class TambahTugasHarianComponent implements OnInit {
     });
 
   }
-
-  // tugas.tugasanHarian = this.transformToPlainText(sanitizedHtml);
-  // transformToPlainText(html: string): string {
-  //   // Create a temporary DOM element to parse the HTML content
-  //   let tempElement = document.createElement('div');
-  //   tempElement.innerHTML = html;
-  
-  //   // Function to recursively parse HTML elements and extract text content
-  //   function parseElement(element) {
-  //     let text = '';
-  //     element.childNodes.forEach(child => {
-  //       if (child.nodeType === Node.TEXT_NODE) {
-  //         text += child.textContent;
-  //       } else if (child.nodeType === Node.ELEMENT_NODE) {
-  //         if (child.tagName === 'UL') {
-  //           text += '\n';
-  //         } else if (child.tagName === 'LI') {
-  //           text += '\n. ';
-  //         }
-  //         text += parseElement(child);
-  //       }
-  //     });
-  //     return text;
-  //   }
-  
-  //   // Get the plain text content from the parsed HTML
-  //   let plainText = parseElement(tempElement);
-    
-  //   // Trim any extra spaces or new lines
-  //   plainText = plainText.trim();
-  
-  //   return plainText;
-  // }
 
 }

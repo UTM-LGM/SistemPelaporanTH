@@ -22,7 +22,6 @@ export class AuthGuardService {
     
     this.authService.currentLoggedIn.subscribe(res => {
       permitted = res
-      //console.log("permitted")
     });
     if (permitted) {
       return true;
@@ -38,17 +37,14 @@ export class AuthGuardService {
     const clientId = '0dfc7581-14e8-4e01-bdb7-da82b5027f7f'; //LOCAL
  
     const tokenInfoString = localStorage.getItem(`msal.token.keys.${clientId}`);
-    //console.log("tokeninfo", tokenInfoString)
     if (tokenInfoString !== null) {
       const tokenInfo = JSON.parse(tokenInfoString);
       if (tokenInfo.accessToken) {
         this.setIdToken(tokenInfo)
         const accessToken = tokenInfo.accessToken[0];
         const secret = localStorage.getItem(accessToken);
-        //console.log(secret);
         if (secret !== null) {
           const secretInfo = JSON.parse(secret);
-          //console.log(secretInfo.secret);
           localStorage.setItem('accessToken', secretInfo.secret);
           this.decodeAccessToken();
         }
@@ -60,10 +56,8 @@ export class AuthGuardService {
     if (tokenInfo.idToken) {
       const idToken = tokenInfo.idToken[0];
       const secret = localStorage.getItem(idToken);
-      //console.log(secret);
       if (secret !== null) {
         const secretInfo = JSON.parse(secret);
-        //console.log(secretInfo.secret);
         localStorage.setItem('idToken', secretInfo.secret);
         this.decodeIdToken(secretInfo.secret)
       }
@@ -75,7 +69,6 @@ export class AuthGuardService {
     const token = localStorage.getItem('accessToken')
     if (token != null) {
       const decodedToken: any = jwtDecode(token);
-      //console.log("accessToken", decodedToken)
  
  
       //check jwt expired time
@@ -103,7 +96,6 @@ export class AuthGuardService {
     if (token != null) {
       const decodedToken: any = jwtDecode(token)
       const email = decodedToken.preferred_username;
-      //console.log("idToken", decodedToken)
       this.authService.setEmail(email);
       console.log("AD", email)
       return email;

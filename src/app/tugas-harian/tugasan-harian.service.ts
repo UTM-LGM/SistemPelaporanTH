@@ -71,6 +71,10 @@ export class TugasanHarianService {
     return this.httpClient.put(`${this.baseUrl}/TugasHarianDetails/UpdateHantarTugasHarian`, tugasan);
   }
 
+  deleteTHById(id: number): Observable<any> {
+    return this.httpClient.delete(`${this.baseUrl}/TugasHarianDetails/DeleteTugasHarianDetail/`+ id);
+  }
+
   ////////////////////////////////// Kelulusan Tugasan Harian/////////////////////////////////////////////////
 
   getSenaraiKelulusan(empId): Observable<tugasHarian_Main[]> {
@@ -105,6 +109,14 @@ export class TugasanHarianService {
 
   getSenaraiKakitangan(emp_id) {
     return this.httpClient.get<employees[]>(this.baseUrl + '/Employees/GetSenaraiKakitangan/' + emp_id);
+  }
+
+  getSenaraiSemak(emp_id,tarikh) {
+    return this.httpClient.get<employees[]>(this.baseUrl + '/Employees/GetSenaraiSemak/' + emp_id + '/' + tarikh);
+  }
+
+  getSenaraiSemakAll(emp_id,tarikh) {
+    return this.httpClient.get<employees[]>(this.baseUrl + '/Employees/GetSenaraiSemakAll/' + emp_id + '/' + tarikh);
   }
   
   ////////////////////////////////// Laporan Tugasan Harian Individu/////////////////////////////////////////////

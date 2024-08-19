@@ -61,4 +61,12 @@ export class AppComponent {
     localStorage.clear();
   }
 
+  subNavOpen = {
+    laporan: false
+  };
+
+  toggleSubNav(menu: string) {
+    this.subNavOpen[menu] = !this.subNavOpen[menu];
+  }
+
 }

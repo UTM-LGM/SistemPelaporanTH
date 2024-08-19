@@ -28,11 +28,19 @@
                     <th style="width: 10%;">BIL.</th>
                     <th>TARIKH</th>
                     <th>STATUS</th>
+                    <th>TARIKH KELULUSAN</th>
                 </tr>
                 <tr *ngFor="let item of displayedLaporanMain; let i=index">
                     <td>{{i + 1}}</td>
                     <td><a routerLink="/laporanTHIndividu/{{item.id}}">{{item.tarikh}}</a></td>
                     <td>{{item.statusThName}}</td>
+                    <td><ng-container *ngIf="item.tarikhKelulusan; else noTarikh">
+                            {{item.tarikhKelulusan}}
+                        </ng-container>
+                        <ng-template #noTarikh>
+                            -
+                        </ng-template>
+                    </td>
                 </tr>
             </table>
             <ng-template #noData>

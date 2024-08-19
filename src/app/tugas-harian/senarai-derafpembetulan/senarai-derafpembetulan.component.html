@@ -1,45 +1,51 @@
 <div style="background-image: url('assets/image/db-bg.jpg'); width: 100%; height: 100%;">
-<div class="main-content">
-    <mat-card style="padding: 50px;">
-        <mat-card class="grad">
-            <h5>Senarai Deraf / Pembetulan</h5>
-        </mat-card>
-        <br>
-        <table *ngIf="laporanMain.length > 0; else noData">
-            <tr>
-                <th style="width: 10%;">BIL.</th>
-                <th>TARIKH</th>
-                <th>NAMA</th>
-                <th>STATUS</th>
-                <th>STATUS KELULUSAN</th>
-                <th>CATATAN</th>
-
-            </tr>
-            <tr *ngFor="let item of laporanMain; let i=index">
-                <td>{{i + 1}}</td>
-                <td><a routerLink="/kemaskiniTH/{{item.id}}">{{item.tarikh}}</a></td>
-                <td>{{item.empName}}</td>
-                <td>{{item.statusName}}</td>
-                <td> <ng-container *ngIf="item.statusKelulusanId; else noStatus">
-                        {{item.statusKelulusanName}}
+    <div class="main-content">
+        <mat-card style="padding: 50px;">
+            <mat-card class="grad">
+                <h5>Senarai Draf / Pembetulan</h5>
+            </mat-card>
+            <br>
+            <table *ngIf="laporanMain.length > 0; else noData">
+                <tr>
+                    <th style="width: 5%;">BIL.</th>
+                    <th>TARIKH</th>
+                    <th>NAMA</th>
+                    <th>STATUS</th>
+                    <th>STATUS KELULUSAN</th>
+                    <th>TARIKH KELULUSAN</th>
+                    <th>CATATAN</th>
+                </tr>
+                <tr *ngFor="let item of laporanMain; let i=index">
+                    <td>{{i + 1}}</td>
+                    <td><a routerLink="/kemaskiniTH/{{item.id}}">{{item.tarikh}}</a></td>
+                    <td>{{item.empName}}</td>
+                    <td>{{item.statusName}}</td>
+                    <td> <ng-container *ngIf="item.statusKelulusanId; else noStatus">
+                            {{item.statusKelulusanName}}
+                        </ng-container>
+                        <ng-template #noStatus>
+                            -
+                        </ng-template>
+                    </td>
+                    <td><ng-container *ngIf="item.tarikhTolak; else noStatus">
+                        {{item.tarikhTolak}}
                     </ng-container>
                     <ng-template #noStatus>
                         -
-                    </ng-template>
-                </td>
-                <td>
-                    <ng-container *ngIf="item.remarks; else noRemark">
-                        {{item.remarks}}
-                    </ng-container>
-                    <ng-template #noRemark>
-                        -
-                    </ng-template>
-                </td>
-            </tr>
-        </table>
-        <ng-template #noData>
-            <div class="no-data-message">Tiada tugasan harian direkod.</div>
-        </ng-template>
-    </mat-card>
-</div>
+                    </ng-template></td>
+                    <td>
+                        <ng-container *ngIf="item.remarks; else noRemark">
+                            {{item.remarks}}
+                        </ng-container>
+                        <ng-template #noRemark>
+                            -
+                        </ng-template>
+                    </td>
+                </tr>
+            </table>
+            <ng-template #noData>
+                <div class="no-data-message">Tiada tugasan harian direkod.</div>
+            </ng-template>
+        </mat-card>
+    </div>
 </div>

@@ -26,6 +26,7 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
 import { SenaraiLaporanKeseluruhanComponent } from './senarai-laporan-keseluruhan/senarai-laporan-keseluruhan.component';
 import { NgxSummernoteModule } from 'ngx-summernote';
 import { SafeHtmlPipe } from './safe-html.pipe';
+import { LaporanSemakSemasaComponent } from './laporan-semak-semasa/laporan-semak-semasa.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { SafeHtmlPipe } from './safe-html.pipe';
     DetailLaporanIndividuComponent,
     LamanUtamaComponent,
     SenaraiLaporanKeseluruhanComponent,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    LaporanSemakSemasaComponent
   ],
   imports: [
     CommonModule,

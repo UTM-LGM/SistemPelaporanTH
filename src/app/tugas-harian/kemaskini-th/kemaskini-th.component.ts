@@ -71,23 +71,33 @@ export class KemaskiniTHComponent implements OnInit {
   }
 
   generateTimeOptions() {
-    let time = new Date();
-    time.setHours(7, 30, 0); // Start at 07:30
-
-    while (time.getHours() < 18 || (time.getHours() === 18 && time.getMinutes() === 0)) {
-      this.timeOptions.push(this.formatTime(time));
-      time.setMinutes(time.getMinutes() + 30);
+    this.timeOptions = [];
+  
+    for (let hour = 0; hour < 24; hour++) {
+      this.timeOptions.push(this.formatTime(hour, 0));
+      
+      this.timeOptions.push(this.formatTime(hour, 30));
     }
   }
-
-  formatTime(time: Date): string {
-    return ('0' + time.getHours()).slice(-2) + ':' + ('0' + time.getMinutes()).slice(-2);
+   
+  formatTime(hour, minute) {
+    const formattedHour = hour.toString().padStart(2, '0');
+    const formattedMinute = minute.toString().padStart(2, '0');
+    
+    return `${formattedHour}:${formattedMinute}`;
   }
 
   getFilteredMasaTamat(masaMula: string): string[] {
     const startIndex = this.timeOptions.indexOf(masaMula);
-    return this.timeOptions.slice(startIndex + 1);
+    let filteredOptions = this.timeOptions.slice(startIndex + 1);
+  
+    if (masaMula <= '23:30') {
+      filteredOptions.push('23:59');
+    }
+  
+    return filteredOptions;
   }
+  
 
   tambah() {
     this.tugasan.push({ id: 0, thMainId: 0, masaMula: "", masaTamat: "", tugasanHarian: "" })
@@ -103,7 +113,18 @@ export class KemaskiniTHComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(x => {
         if (x === true) {
+          const tugasId = this.tugasan[index].id;
+          this.laporanTugas.deleteTHById(tugasId).subscribe();
           this.tugasan.splice(index, 1);
+          Swal.fire({
+            imageUrl: 'assets/image/dustbin.png',  // Replace with the path to your custom icon
+            imageWidth: 100,  // Adjust the width as needed
+            imageHeight: 100,  // Adjust the height as needed
+            imageAlt: 'Custom Icon',
+            html: '<span style="font-size: 18px;">Tugasan berjaya dipadam</span>',
+            showConfirmButton: false,
+            timer: 1800
+          });
         }
       });
     } else {

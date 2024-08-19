@@ -12,6 +12,11 @@ export class tugasHarian_Main{
     UnitId:string;
     unitId: string;
     Remarks:string;
+    tarikhDeraf: Date;
+    tarikhHantar: Date;
+    tarikhResubmit: Date;
+    tarikhKelulusan: Date;
+    tarikhTolak: Date;
     StatusThId: number;
     statusThId: number;
     StatusKelulusanId: number;
