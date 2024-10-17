@@ -3,6 +3,7 @@ import { TugasanHarianService } from '../tugasan-harian.service';
 import { AuthServiceService } from 'src/app/auth/auth-service.service';
 import { employees } from 'src/app/models/employees.model';
 import { tugasHarian_Main } from 'src/app/models/tugasHarian_Main.model';
+import { userDTO } from 'src/app/models/userDTO.model';
 
 @Component({
   selector: 'app-senarai-laporan-keseluruhan',

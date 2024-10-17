@@ -9,6 +9,7 @@ import { tugasHarian_Main } from 'src/app/models/tugasHarian_Main.model';
 import { tugasHarian_Detail } from 'src/app/models/tugasHarian_Detail.model';
 import { employees } from 'src/app/models/employees.model';
 import { AuthServiceService } from 'src/app/auth/auth-service.service';
+import { userDTO } from 'src/app/models/userDTO.model';
 
 @Component({
   selector: 'app-kemaskini-th',
@@ -140,7 +141,7 @@ export class KemaskiniTHComponent implements OnInit {
       }));
     });
   }
-
+  
   onMasaMulaChange(index: number, masaMula: string) {
     this.tugasan[index].filteredMasaTamatOptions = this.getFilteredMasaTamat(masaMula);
     this.tugasan[index].masaTamat = '';
@@ -165,7 +166,7 @@ export class KemaskiniTHComponent implements OnInit {
       });
       return;
     }
-    this.laporanTugas.updateTugasan(this.tugasan).subscribe(
+    this.laporanTugas.updateTugasan(this.tugasan, this.thMainId).subscribe(
       response => {
         Swal.fire({
           html: '<span style="font-size: 18px;">Laporan berjaya dikemaskini.</span>',
@@ -206,7 +207,7 @@ export class KemaskiniTHComponent implements OnInit {
       });
       return;
     }
-    this.laporanTugas.updateDerafDetail(this.tugasan).subscribe(
+    this.laporanTugas.updateDerafDetail(this.tugasan, this.thMainId).subscribe(
       response => {
         Swal.fire({
           html: '<span style="font-size: 18px;">Laporan tugasan harian berjaya dihantar.</span>',

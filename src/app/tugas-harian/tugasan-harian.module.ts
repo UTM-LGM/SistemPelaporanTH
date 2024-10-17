@@ -27,6 +27,7 @@ import { SenaraiLaporanKeseluruhanComponent } from './senarai-laporan-keseluruha
 import { NgxSummernoteModule } from 'ngx-summernote';
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { LaporanSemakSemasaComponent } from './laporan-semak-semasa/laporan-semak-semasa.component';
+import { LaporanSemakKuComponent } from './laporan-semak-ku/laporan-semak-ku.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { LaporanSemakSemasaComponent } from './laporan-semak-semasa/laporan-sema
     LamanUtamaComponent,
     SenaraiLaporanKeseluruhanComponent,
     SafeHtmlPipe,
-    LaporanSemakSemasaComponent
+    LaporanSemakSemasaComponent,
+    LaporanSemakKuComponent
   ],
   imports: [
     CommonModule,

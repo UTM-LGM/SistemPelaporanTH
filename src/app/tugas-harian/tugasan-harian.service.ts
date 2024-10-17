@@ -63,13 +63,25 @@ export class TugasanHarianService {
 
   ////////////////////////////////// Kemaskini Tugasan Harian/////////////////////////////////////////////////
 
-  updateTugasan(tugasan: tugasHarian_Detail[]): Observable<any> {
-    return this.httpClient.put(`${this.baseUrl}/TugasHarianDetails/UpdateTugasHarian`, tugasan);
-  }
+  // updateTugasan(tugasan: tugasHarian_Detail[]): Observable<any> {
+  //   return this.httpClient.put(`${this.baseUrl}/TugasHarianDetails/UpdateTugasHarian`, tugasan);
+  // }
 
-  updateDerafDetail(tugasan: tugasHarian_Detail[]): Observable<any> {
-    return this.httpClient.put(`${this.baseUrl}/TugasHarianDetails/UpdateHantarTugasHarian`, tugasan);
+  updateTugasan(tugasan: tugasHarian_Detail[], thMainId: number): Observable<any> {
+    const url = `${this.baseUrl}/TugasHarianDetails/UpdateTugasHarian?thMainId=${thMainId}`;
+    return this.httpClient.put(url, tugasan);
   }
+  
+
+  // updateDerafDetail(tugasan: tugasHarian_Detail[]): Observable<any> {
+  //   return this.httpClient.put(`${this.baseUrl}/TugasHarianDetails/UpdateHantarTugasHarian`, tugasan);
+  // }
+
+  updateDerafDetail(tugasan: tugasHarian_Detail[], thMainId: number): Observable<any> {
+    const url = `${this.baseUrl}/TugasHarianDetails/UpdateHantarTugasHarian?thMainId=${thMainId}`;
+    return this.httpClient.put(url, tugasan);
+  }
+  
 
   deleteTHById(id: number): Observable<any> {
     return this.httpClient.delete(`${this.baseUrl}/TugasHarianDetails/DeleteTugasHarianDetail/`+ id);
@@ -113,6 +125,14 @@ export class TugasanHarianService {
 
   getSenaraiSemak(emp_id,tarikh) {
     return this.httpClient.get<employees[]>(this.baseUrl + '/Employees/GetSenaraiSemak/' + emp_id + '/' + tarikh);
+  }
+
+  getSenaraiSemakUnit(emp_id,unit_id,tarikh) {
+    return this.httpClient.get<employees[]>(this.baseUrl + '/Employees/GetSenaraiSemakUnit/' + emp_id + '/' + unit_id + '/' + tarikh);
+  }
+
+  getUnitKU(emp_id) {
+    return this.httpClient.get<unit[]>(this.baseUrl + '/Units/GetSenaraiUnitKU/' + emp_id);
   }
 
   getSenaraiSemakAll(emp_id,tarikh) {

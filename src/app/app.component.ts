@@ -3,6 +3,8 @@ import { MsalService } from '@azure/msal-angular';
 import { TugasanHarianService } from './tugas-harian/tugasan-harian.service';
 import { employees } from './models/employees.model';
 import { AuthServiceService } from './auth/auth-service.service';
+import { unit } from './models/unit.model';
+import { userDTO } from './models/userDTO.model';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +12,12 @@ import { AuthServiceService } from './auth/auth-service.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  
   isLoading: boolean = false;
   title = 'SistemPelaporanTugasanHarian';
   currentUser: employees = {} as employees;
   employees: employees[] = [];
+  units: unit[] = [];
 
   constructor(
     private msalService: MsalService,
@@ -28,7 +32,7 @@ export class AppComponent {
       if (loggedIn) {
         this.authService.currentEmail.subscribe(email => {
           if (email) {
-            this.currentUser.empEmailLogin = email;
+            this.currentUser.empEmailLogin = email
             this.loadUserData();
           }
         });
@@ -44,6 +48,9 @@ export class AppComponent {
       });
       this.laporanTugas.getSenaraiPelulus(this.currentUser.empId).subscribe(lulus => {
         this.employees = lulus;
+      });
+      this.laporanTugas.getUnitKU(this.currentUser.empId).subscribe(unit => {
+        this.units = unit
       });
     });
   }

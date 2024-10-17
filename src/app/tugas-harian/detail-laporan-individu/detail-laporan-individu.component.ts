@@ -7,6 +7,7 @@ import { employees } from 'src/app/models/employees.model';
 import { tugasHarian_Detail } from 'src/app/models/tugasHarian_Detail.model';
 import { tugasHarian_Main } from 'src/app/models/tugasHarian_Main.model';
 import { AuthServiceService } from 'src/app/auth/auth-service.service';
+import { userDTO } from 'src/app/models/userDTO.model';
 
 @Component({
   selector: 'app-detail-laporan-individu',

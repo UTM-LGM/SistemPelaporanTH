@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
 import { jwtDecode } from "jwt-decode";
 import { AuthServiceService } from './auth-service.service';
+import { from, Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,25 +18,25 @@ export class AuthGuardService {
   ) { }
 
   canActivate(): boolean {
-    this.setAccessToken(); // Call setAccessToken here
+    this.setAccessToken();
     return true
     let permitted;
-    
     this.authService.currentLoggedIn.subscribe(res => {
       permitted = res
     });
     if (permitted) {
+      
       return true;
     }
  
     this.router.navigate(['']);
     return false;
   }
-
+ 
   setAccessToken() {
     // Entra Id
-    //const clientId = '2c5e5f1f-1ede-413f-a396-a2f7e103de3c'; //PRODUCTION
-    const clientId = '0dfc7581-14e8-4e01-bdb7-da82b5027f7f'; //LOCAL
+    //const clientId = '2c5e5f1f-1ede-413f-a396-a2f7e103de3c'; // PRODUCTION
+    const clientId = '0dfc7581-14e8-4e01-bdb7-da82b5027f7f'; // LOCAL
  
     const tokenInfoString = localStorage.getItem(`msal.token.keys.${clientId}`);
     if (tokenInfoString !== null) {
@@ -51,7 +53,7 @@ export class AuthGuardService {
       }
     }
   }
-
+ 
   setIdToken(tokenInfo: any) {
     if (tokenInfo.idToken) {
       const idToken = tokenInfo.idToken[0];
@@ -63,21 +65,20 @@ export class AuthGuardService {
       }
     }
   }
-
+ 
   // Function to decode token and extract email
   decodeAccessToken() {
     const token = localStorage.getItem('accessToken')
     if (token != null) {
       const decodedToken: any = jwtDecode(token);
  
- 
       //check jwt expired time
       const currentTime = new Date().getTime()
       //*1000 to convert milisecond
       if (decodedToken.exp * 1000 < currentTime) {
         this.msalService.logoutRedirect({
-           postLogoutRedirectUri: 'http://localhost:4200/login'
-           //postLogoutRedirectUri: 'https://www5.lgm.gov.my/PelaporanTugasHarian/login'
+          postLogoutRedirectUri: 'http://localhost:4200/login'
+          //postLogoutRedirectUri: 'https://www5.lgm.gov.my/PelaporanTugasHarian/login'
         });
         localStorage.clear()
         this.router.navigateByUrl('/login')
@@ -90,16 +91,13 @@ export class AuthGuardService {
     return true
  
   }
-
+ 
   decodeIdToken(token: string) {
-    //const token = localStorage.getItem('idToken')
     if (token != null) {
       const decodedToken: any = jwtDecode(token)
-      const email = decodedToken.preferred_username;
-      this.authService.setEmail(email);
-      console.log("AD", email)
-      return email;
+      return decodedToken.preferred_username
     }
-  }
+  } 
+
 }
 

@@ -39,7 +39,6 @@ export class TambahTugasHarianComponent implements OnInit {
     fontNames: ['Arial']
   }
 
-  user: userDTO = {} as userDTO;
   currentUser: employees = {} as employees;
   tugasan: tugasHarian_Detail[] = [];
   mainTugasan: tugasHarian_Main = {} as tugasHarian_Main;
@@ -51,6 +50,7 @@ export class TambahTugasHarianComponent implements OnInit {
   dateExistStatusThId: number | null = null;
   isDisabled: boolean = false;
   userEmail;
+  isSaving = false;
 
   constructor(
     private laporanTugas: TugasanHarianService,
@@ -152,7 +152,99 @@ export class TambahTugasHarianComponent implements OnInit {
     }
   }
 
-  simpan() {
+  // simpan() {
+  //   if (this.dateExistStatusThId === 1) {
+  //     Swal.fire({
+  //       html: '<span style="font-size: 18px;">Tidak boleh disimpan kerana tugasan harian pada hari ini telah wujud</span>',
+  //       icon: 'error',
+  //       showConfirmButton: false,
+  //       timer: 2500,
+  //     });
+  //     this.router.navigate(['/senaraiDeraf']);
+  //     return;
+  //   }
+  //   else if (this.dateExistStatusThId === 2 || this.dateExistStatusThId === 3 || this.dateExistStatusThId === 4 || this.dateExistStatusThId === 5 || this.dateExistStatusThId === 6 || this.dateExistStatusThId === 7 || this.dateExistStatusThId === 9 || this.dateExistStatusThId === 9 || this.dateExistStatusThId === 10 || this.dateExistStatusThId === 11) {
+  //     Swal.fire({
+  //       html: '<span style="font-size: 18px;">Tidak boleh disimpan kerana tugasan harian pada hari ini telah dihantar</span>',
+  //       icon: 'error',
+  //       showConfirmButton: false,
+  //       timer: 2500,
+  //     });
+  //     return;
+  //   }
+
+  //   let hasError = false;
+
+  //   for (let tugas of this.tugasan) {
+  //     if (!tugas.masaMula || !tugas.masaTamat || !tugas.tugasanHarian ||
+  //       tugas.masaMula.trim() === '' || tugas.masaTamat.trim() === '' || tugas.tugasanHarian.trim() === '') {
+  //       hasError = true;
+  //       break;
+  //     }
+  //   }
+
+  //   if (hasError) {
+  //     Swal.fire({
+  //       html: '<span style="font-size: 18px;">Sila pastikan semua ruangan diisi dengan lengkap sebelum disimpan.</span>',
+  //       icon: 'error',
+  //       showConfirmButton: false,
+  //       timer: 2500,
+  //     });
+  //     return;
+  //   }
+
+  //   this.mainTugasan.EmpId = this.currentUser.empId;
+  //   this.mainTugasan.UnitId = this.currentUser.unitId;
+  //   this.mainTugasan.StatusThId = 1;
+  //   this.mainTugasan.StatusKelulusanId = null;
+
+  //   this.laporanTugas.simpanDeraf(this.mainTugasan).subscribe(mainResult => {
+  //     this.mainTugasan = mainResult;
+
+  //     if (this.mainTugasan.id) {
+  //       let detailRequests = this.tugasan.map(tugas => {
+  //         const sanitizedTugasanHarian = this.sanitizer.sanitize(SecurityContext.HTML, tugas.tugasanHarian) || '';
+
+  //         return {
+  //           id: tugas.id,
+  //           thMainId: this.mainTugasan.id,
+  //           masaMula: tugas.masaMula,
+  //           masaTamat: tugas.masaTamat,
+  //           tugasanHarian: sanitizedTugasanHarian
+  //         };
+  //       });
+
+  //       this.laporanTugas.simpanDerafDetail(detailRequests).subscribe(detailResult => {
+  //         Swal.fire({
+  //           title: 'Draf',
+  //           imageUrl: 'assets/image/draf.png',  // Replace with the path to your custom icon
+  //           imageWidth: 100,  // Adjust the width as needed
+  //           imageHeight: 100,  // Adjust the height as needed
+  //           imageAlt: 'Custom Icon',
+  //           html: '<span style="font-size: 18px;">Tugasan harian telah disimpan</span>',
+  //           showConfirmButton: false,
+  //           timer: 1800
+  //         });
+  //       }, error => {
+  //         console.error('Error saving details:', error);
+  //       });
+
+  //     } else {
+  //       console.error('Error: mainTugasan.Id is not set');
+  //     }
+  //   }, error => {
+  //     console.error('Error saving mainTugasan:', error);
+  //   });
+  //   this.router.navigate(['/senaraiDeraf']);
+  // }
+
+  async simpan() {
+    if (this. isSaving) {
+      return;
+    }
+
+    this.isSaving = true;
+
     if (this.dateExistStatusThId === 1) {
       Swal.fire({
         html: '<span style="font-size: 18px;">Tidak boleh disimpan kerana tugasan harian pada hari ini telah wujud</span>',
@@ -161,20 +253,20 @@ export class TambahTugasHarianComponent implements OnInit {
         timer: 2500,
       });
       this.router.navigate(['/senaraiDeraf']);
+      this.isSaving = false;
       return;
-    }
-    else if (this.dateExistStatusThId === 2 || this.dateExistStatusThId === 3 || this.dateExistStatusThId === 4 || this.dateExistStatusThId === 5 || this.dateExistStatusThId === 6 || this.dateExistStatusThId === 7 || this.dateExistStatusThId === 9 || this.dateExistStatusThId === 9 || this.dateExistStatusThId === 10 || this.dateExistStatusThId === 11) {
+    } else if ([2, 3, 4, 5, 6, 7, 9, 10, 11].includes(this.dateExistStatusThId)) {
       Swal.fire({
         html: '<span style="font-size: 18px;">Tidak boleh disimpan kerana tugasan harian pada hari ini telah dihantar</span>',
         icon: 'error',
         showConfirmButton: false,
         timer: 2500,
       });
+      this.isSaving = false;
       return;
     }
-
+  
     let hasError = false;
-
     for (let tugas of this.tugasan) {
       if (!tugas.masaMula || !tugas.masaTamat || !tugas.tugasanHarian ||
         tugas.masaMula.trim() === '' || tugas.masaTamat.trim() === '' || tugas.tugasanHarian.trim() === '') {
@@ -182,7 +274,7 @@ export class TambahTugasHarianComponent implements OnInit {
         break;
       }
     }
-
+  
     if (hasError) {
       Swal.fire({
         html: '<span style="font-size: 18px;">Sila pastikan semua ruangan diisi dengan lengkap sebelum disimpan.</span>',
@@ -190,53 +282,62 @@ export class TambahTugasHarianComponent implements OnInit {
         showConfirmButton: false,
         timer: 2500,
       });
+      this.isSaving = false;
       return;
     }
-
+  
     this.mainTugasan.EmpId = this.currentUser.empId;
     this.mainTugasan.UnitId = this.currentUser.unitId;
     this.mainTugasan.StatusThId = 1;
     this.mainTugasan.StatusKelulusanId = null;
-
-    this.laporanTugas.simpanDeraf(this.mainTugasan).subscribe(mainResult => {
-      this.mainTugasan = mainResult;
-
+  
+    try {
+      // Wait for simpanDeraf to complete
+      this.mainTugasan = await this.laporanTugas.simpanDeraf(this.mainTugasan).toPromise();
+  
       if (this.mainTugasan.id) {
         let detailRequests = this.tugasan.map(tugas => {
           const sanitizedTugasanHarian = this.sanitizer.sanitize(SecurityContext.HTML, tugas.tugasanHarian) || '';
-
+  
           return {
             id: tugas.id,
-            thMainId: this.mainTugasan.id,
+            thMainId: this.mainTugasan.id,  // Make sure this ID is available
             masaMula: tugas.masaMula,
             masaTamat: tugas.masaTamat,
             tugasanHarian: sanitizedTugasanHarian
           };
         });
-
-        this.laporanTugas.simpanDerafDetail(detailRequests).subscribe(detailResult => {
-          Swal.fire({
-            title: 'Draf',
-            imageUrl: 'assets/image/draf.png',  // Replace with the path to your custom icon
-            imageWidth: 100,  // Adjust the width as needed
-            imageHeight: 100,  // Adjust the height as needed
-            imageAlt: 'Custom Icon',
-            html: '<span style="font-size: 18px;">Tugasan harian telah disimpan</span>',
-            showConfirmButton: false,
-            timer: 1800
-          });
-        }, error => {
-          console.error('Error saving details:', error);
+  
+        // Wait for simpanDerafDetail to complete
+        await this.laporanTugas.simpanDerafDetail(detailRequests).toPromise();
+  
+        Swal.fire({
+          title: 'Draf',
+          imageUrl: 'assets/image/draf.png',
+          imageWidth: 100,
+          imageHeight: 100,
+          imageAlt: 'Custom Icon',
+          html: '<span style="font-size: 18px;">Tugasan harian telah disimpan</span>',
+          showConfirmButton: false,
+          timer: 1800
         });
-
+  
       } else {
-        console.error('Error: mainTugasan.Id is not set');
+        console.error('Ralat: mainTugasan.Id tidak ditetapkan');
       }
-    }, error => {
-      console.error('Error saving mainTugasan:', error);
-    });
+  
+    } catch (error) {
+      console.error('Error during save:', error);
+      Swal.fire({
+        html: '<span style="font-size: 18px;">Terdapat ralat sewaktu menyimpan data. Sila cuba lagi kemudian.</span>',
+        icon: 'error',
+        showConfirmButton: false,
+        timer: 2500,
+      });
+    }
+    this.isSaving = false;
     this.router.navigate(['/senaraiDeraf']);
-  }
+  }  
 
   hantar() {
     if (this.dateExistStatusThId === 1) {

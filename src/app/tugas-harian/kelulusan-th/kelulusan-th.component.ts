@@ -6,6 +6,7 @@ import { unit } from 'src/app/models/unit.model';
 import { DatePipe } from '@angular/common';
 import { MatSelect } from '@angular/material/select';
 import { AuthServiceService } from 'src/app/auth/auth-service.service';
+import { userDTO } from 'src/app/models/userDTO.model';
 
 @Component({
   selector: 'app-kelulusan-th',

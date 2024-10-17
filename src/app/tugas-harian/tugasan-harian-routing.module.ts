@@ -10,6 +10,7 @@ import { DetailLaporanIndividuComponent } from './detail-laporan-individu/detail
 import { LamanUtamaComponent } from './laman-utama/laman-utama.component';
 import { SenaraiLaporanKeseluruhanComponent } from './senarai-laporan-keseluruhan/senarai-laporan-keseluruhan.component';
 import { LaporanSemakSemasaComponent } from './laporan-semak-semasa/laporan-semak-semasa.component';
+import { LaporanSemakKuComponent } from './laporan-semak-ku/laporan-semak-ku.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: 'lamanUtama', component: LamanUtamaComponent },
   { path: 'senaraiLaporanKeseluruhan', component: SenaraiLaporanKeseluruhanComponent },
   { path: 'senaraiLaporanSemak', component: LaporanSemakSemasaComponent },
+  { path: 'senaraiLaporanUnit', component: LaporanSemakKuComponent },
 ];
 
 @NgModule({

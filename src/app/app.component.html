@@ -52,16 +52,8 @@
                     </span>
                 </a>
             </li>
-            <!-- <li *ngIf="this.employees.length > 0" class="has-subnav">
-                <a routerLink="/senaraiLaporanKeseluruhan">
-                    <i class="fa fa-folder fa-2x"></i>
-                    <span class="nav-text">
-                        Senarai Laporan
-                    </span>
-                </a>
-            </li> -->
 
-            <li *ngIf="this.employees.length > 0" class="has-subnav">
+            <li *ngIf="this.employees.length > 0 || this.units.length > 0" class="has-subnav">
                 <a (click)="toggleSubNav('laporan')">
                     <i class="fa fa-folder fa-2x"></i>
                     <span class="nav-text">
@@ -69,16 +61,22 @@
                     </span>
                 </a>
                 <ul *ngIf="subNavOpen.laporan" class="sub-nav">
-                    <li>
+                    <li *ngIf="this.employees.length > 0">
                         <a routerLink="/senaraiLaporanKeseluruhan">
                             <i class="fa fa-file-text fa-2x"></i>
                             <span class="nav-text">TH (Selesai)</span>
                         </a>
                     </li>
-                    <li>
+                    <li *ngIf="this.employees.length > 0">
                         <a routerLink="/senaraiLaporanSemak">
                             <i class="fa fa-file fa-2x"></i>
                             <span class="nav-text">TH (Status Semasa)</span>
+                        </a>
+                    </li>
+                    <li  *ngIf="this.units.length > 0">
+                        <a routerLink="/senaraiLaporanUnit">
+                            <i class="fa fa-list-alt fa-2x"></i>
+                            <span class="nav-text">TH (Unit)</span>
                         </a>
                     </li>
                 </ul>

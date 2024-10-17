@@ -133,3 +133,12 @@ textarea.transparentInput {
     transform: translateY(-50%);
     pointer-events: none;
 }
+
+.border-red {
+    border: 2px solid red !important;
+}
+
+.border-green {
+    border: 2px solid green !important;
+}
+

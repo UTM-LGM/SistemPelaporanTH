@@ -19,6 +19,7 @@ export class tugasHarian_Main{
     tarikhTolak: Date;
     StatusThId: number;
     statusThId: number;
+    statusThid: number;
     StatusKelulusanId: number;
     Tugas: tugasHarian_Detail[] = [];
 }

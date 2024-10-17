@@ -61,3 +61,19 @@ td {
     padding: 20px;
 }
 
+.reset-button {
+    padding-left: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.reset-button:hover {
+    background-color: #f44336; 
+    color: white; 
+}
+
+.reset-button:active {
+    background-color: #d32f2f;
+    transform: translateY(2px);
+}
+
+

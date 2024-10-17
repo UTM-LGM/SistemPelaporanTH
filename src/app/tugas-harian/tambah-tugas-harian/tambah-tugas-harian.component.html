@@ -30,12 +30,20 @@
                     
                 </td>
                 <td>
-                    <select class="custom-select" name="masaMula" [(ngModel)]="tugasan[i].masaMula" [disabled]="isDisabled" (change)="tugasan[i].masaTamat = ''; tugasan[i].filteredMasaTamatOptions = getFilteredMasaTamat(tugasan[i].masaMula)">
+                    <select class="custom-select" name="masaMula" [(ngModel)]="tugasan[i].masaMula" [disabled]="isDisabled" (change)="tugasan[i].masaTamat = ''; tugasan[i].filteredMasaTamatOptions = getFilteredMasaTamat(tugasan[i].masaMula)"
+                    [ngClass]="{
+                        'border-red': !item.masaMula || item.masaMula === '',
+                        'border-green': item.masaMula && item.masaMula !== ''
+                    }">
                         <option *ngFor="let time of timeOptions" [value]="time">{{ time }}</option>
                       </select>
                 </td>
                 <td>
-                    <select class="custom-select" name="masaTamat" [(ngModel)]="tugasan[i].masaTamat" [disabled]="isDisabled">
+                    <select class="custom-select" name="masaTamat" [(ngModel)]="tugasan[i].masaTamat" [disabled]="isDisabled"
+                    [ngClass]="{
+                        'border-red': !item.masaTamat || item.masaTamat === '',
+                        'border-green': item.masaTamat && item.masaTamat !== ''
+                    }">
                         <option *ngFor="let time of tugasan[i].filteredMasaTamatOptions" [value]="time">{{ time }}</option>
                       </select>
                 </td>

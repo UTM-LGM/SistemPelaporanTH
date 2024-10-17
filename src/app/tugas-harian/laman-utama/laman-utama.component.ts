@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthServiceService } from 'src/app/auth/auth-service.service';
 import { employees } from 'src/app/models/employees.model';
 import { TugasanHarianService } from '../tugasan-harian.service';
+import { userDTO } from 'src/app/models/userDTO.model';
 
 @Component({
   selector: 'app-laman-utama',

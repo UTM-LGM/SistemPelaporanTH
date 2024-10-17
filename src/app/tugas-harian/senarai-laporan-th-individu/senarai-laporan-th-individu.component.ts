@@ -4,6 +4,7 @@ import { tugasHarian_Main } from 'src/app/models/tugasHarian_Main.model';
 import { TugasanHarianService } from '../tugasan-harian.service';
 import { AuthServiceService } from 'src/app/auth/auth-service.service';
 import { ref_StatusTH } from 'src/app/models/ref_StatusTH.model';
+import { userDTO } from 'src/app/models/userDTO.model';
 
 @Component({
   selector: 'app-senarai-laporan-th-individu',
